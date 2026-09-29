@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JHS Quiz Master - Shadreck Edition</title>
+    <style>
+        :root { --jhs1: #3498db; --jhs2: #f39c12; --jhs3: #e74c3c; --bg: #f4f7f6; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); text-align: center; padding: 20px; overflow-x: hidden; }
+        .game-container { max-width: 900px; margin: auto; background: white; padding: 30px; border-radius: 30px; box-shadow: 0 15px 35px rgba(0,0,0,0.2); }
+        .grade-badge { display: inline-block; padding: 8px 20px; border-radius: 20px; color: white; font-weight: bold; margin-bottom: 15px; background: #95a5a6; font-size: 20px; }
+        h1 { font-size: 36px; margin: 5px 0; color: #2c3e50; }
+        .hint { background: #fff; border: 3px solid #eee; padding: 20px; margin: 12px 0; border-radius: 15px; font-size: 28px; display: none; line-height: 1.4; }
+        .hint.visible { display: block; animation: slideIn 0.4s ease-out; border-color: #3498db; background: #ebf5fb; }
+        .answer-area { display: none; margin-top: 20px; padding: 20px; border: 6px solid #27ae60; border-radius: 20px; background: #e8f8f5; animation: pop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        #ans-text { font-size: 60px; color: #27ae60; font-weight: bold; text-transform: uppercase; margin-bottom: 10px; }
+        #ans-img { max-width: 90%; max-height: 400px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); object-fit: cover; }
+        .controls { margin-top: 25px; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+        button { padding: 15px 25px; font-size: 18px; cursor: pointer; border: none; border-radius: 12px; color: white; transition: 0.2s; font-weight: bold; }
+        button:hover { filter: brightness(1.1); transform: translateY(-2px); }
+        button:active { transform: scale(0.95); }
+        .btn-blue { background: #3498db; } .btn-orange { background: #f39c12; } .btn-red { background: #e74c3c; } .btn-green { background: #27ae60; height: 60px; width: 220px; font-size: 22px; } .btn-purple { background: #9b59b6; }
+        @keyframes slideIn { from { opacity: 0; transform: translateX(-50px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes pop { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+    </style>
+</head>
+<body>
+
+<div class="game-container">
+    <div id="grade-display" class="grade-badge">Select Grade to Start</div>
+    <h1>3-Hint Quiz</h1>
+    
+    <div class="grade-selector">
+        <button class="btn-blue" onclick="startQuiz('JHS1')">JHS 1</button>
+        <button class="btn-orange" onclick="startQuiz('JHS2')">JHS 2</button>
+        <button class="btn-red" onclick="startQuiz('JHS3')">JHS 3</button>
+    </div>
+
+    <hr style="margin: 25px 0; opacity: 0.1;">
+
+    <div id="h1" class="hint"><strong>1:</strong> <span class="content"></span></div>
+    <div id="h2" class="hint"><strong>2:</strong> <span class="content"></span></div>
+    <div id="h3" class="hint"><strong>3:</strong> <span class="content"></span></div>
+
+    <div id="answer-area" class="answer-area">
+        <div id="ans-text"></div>
+        <img id="ans-img" src="" alt="Reveal Image">
+    </div>
+
+    <div class="controls">
+        <button class="btn-blue" onclick="reveal(1)">Hint 1</button>
+        <button class="btn-blue" onclick="reveal(2)">Hint 2</button>
+        <button class="btn-blue" onclick="reveal(3)">Hint 3</button>
+        <button class="btn-green" onclick="showAnswer()">SHOW ANSWER</button>
+        <button class="btn-purple" onclick="nextQ()">NEXT ➔</button>
+    </div>
+    <p style="color: #999; margin-top: 15px;">Shortcuts: [1, 2, 3] = Hints | [A / Enter] = Answer | [N / Space] = Next</p>
+</div>
+
+<script>
+    const data = {
+        JHS1: [
+            {h1: "I am an animal.", h2: "I have a very long neck.", h3: "I am yellow with brown spots.", ans: "Giraffe"},
+            {h1: "I am a fruit.", h2: "I am red and round.", h3: "You can find me in 'A' is for...", ans: "Apple"},
+            {h1: "I can swim very well.", h2: "I have no legs.", h3: "I am usually orange. I live in a bowl.", ans: "Goldfish"},
+            {h1: "I am a sport played in summer.", h2: "You hit a ball with a bat.", h3: "Shohei Ohtani is very famous.", ans: "Baseball"},
+            {h1: "I am a place in your house.", h2: "You can cook food here.", h3: "There is a fridge and a stove.", ans: "Kitchen"},
+            {h1: "I am an animal with no legs.", h2: "I am long and scary to some.", h3: "I say 'hiss hiss'.", ans: "Snake"},
+            {h1: "I am a school subject.", h2: "We use numbers and shapes.", h3: "One plus one is two.", ans: "Math"},
+            {h1: "I am a musical instrument.", h2: "I have 88 black and white keys.", h3: "You play me with both hands.", ans: "Piano"},
+            {h1: "I am a bird.", h2: "I am usually black.", h3: "In Japan, I say 'ah-ah!'.", ans: "Crow"},
+            {h1: "I am a season.", h2: "It is very cold.", h3: "We can see snow.", ans: "Winter"},
+            {h1: "I am a drink.", h2: "I am white.", h3: "I come from cows.", ans: "Milk"},
+            {h1: "I am a vehicle.", h2: "I have two wheels.", h3: "You ride me to school.", ans: "Bicycle"},
+            {h1: "I am an insect.", h2: "I have beautiful wings.", h3: "I was a caterpillar before.", ans: "Butterfly"},
+            {h1: "I am a place.", h2: "There are many books.", h3: "You must be quiet here.", ans: "Library"},
+            {h1: "I am a body part.", h2: "I have five fingers.", h3: "You use me to write.", ans: "Hand"},
+            {h1: "I am a fast animal.", h2: "I like to eat carrots.", h3: "I have long ears.", ans: "Rabbit"},
+            {h1: "I am a yellow fruit.", h2: "I am very sour.", h3: "I look like a football.", ans: "Lemon"},
+            {h1: "I am a big animal.", h2: "I live in the ocean.", h3: "I am the largest mammal.", ans: "Whale"},
+            {h1: "I am a piece of clothing.", h2: "You wear me on your feet.", h3: "You wear me under shoes.", ans: "Socks"},
+            {h1: "I am the center of our system.", h2: "I am a very hot star.", h3: "I rise in the East.", ans: "Sun"}
+        ],
+        JHS2: [
+            {h1: "It is a place to visit fish.", h2: "It is more exciting than a library.", h3: "You can see sharks and dolphins.", ans: "Aquarium"},
+            {h1: "You must wear this in winter.", h2: "It is longer and warmer than a jacket.", h3: "It often has big buttons.", ans: "Coat"},
+            {h1: "It is a job to help people.", h2: "They are often busier than doctors.", h3: "They wear uniforms in hospitals.", ans: "Nurse"},
+            {h1: "You use this to stay dry.", h2: "It is more useful than a hat in rain.", h3: "You open it when it starts to rain.", ans: "Umbrella"},
+            {h1: "It is a country in Europe.", h2: "It is smaller than China.", h3: "The capital city is London.", ans: "United Kingdom"},
+            {h1: "It is a room at school.", h2: "You must not run or eat here.", h3: "We do science experiments here.", ans: "Science Lab"},
+            {h1: "It is an animal.", h2: "It is faster than a human.", h3: "It has black and white stripes.", ans: "Zebra"},
+            {h1: "It is a device.", h2: "It is more popular than a PC.", h3: "You use it to call and play games.", ans: "Smartphone"},
+            {h1: "It is a sport.", h2: "You must not touch the ball with hands.", h3: "It is called football in Europe.", ans: "Soccer"},
+            {h1: "It is a food from Italy.", h2: "It is round and has cheese.", h3: "It is often delivered to houses.", ans: "Pizza"},
+            {h1: "It is a holiday.", h2: "It is on December 25th.", h3: "A man in red brings presents.", ans: "Christmas"},
+            {h1: "It is a tall building.", h2: "You can see all of Tokyo from here.", h3: "It is red and white.", ans: "Tokyo Tower"},
+            {h1: "It is a sea animal.", h2: "It is smarter than most fish.", h3: "It is famous for jumping and play.", ans: "Dolphin"},
+            {h1: "It is a kitchen tool.", h2: "It is sharper than a spoon.", h3: "You must be careful when cutting.", ans: "Knife"},
+            {h1: "It is a place to buy things.", h2: "It is open 24 hours a day.", h3: "7-Eleven and Lawson are examples.", ans: "Convenience Store"},
+            {h1: "It is a school event.", h2: "It is more tiring than a lesson.", h3: "Students run and cheer for teams.", ans: "Sports Day"},
+            {h1: "It is a useful book.", h2: "It is heavier than a notebook.", h3: "You use it to find English words.", ans: "Dictionary"},
+            {h1: "It is a large animal.", h2: "It is stronger than a tiger.", h3: "It lives in Africa and has a mane.", ans: "Lion"},
+            {h1: "It is a sweet food.", h2: "It is colder than a cake.", h3: "You eat it in a cone or cup.", ans: "Ice Cream"},
+            {h1: "It is a transport.", h2: "It is faster than a bus.", h3: "It is also called the 'Bullet Train'.", ans: "Shinkansen"}
+        ],
+        JHS3: [
+            {h1: "It is a food made from soybeans.", h2: "It is known for its sticky texture.", h3: "It is often eaten for breakfast.", ans: "Natto"},
+            {h1: "He was a man who lived long ago.", h2: "He is known as a great leader.", h3: "He was betrayed at Honno-ji.", ans: "Oda Nobunaga"},
+            {h1: "It is a device which cleans floors.", h2: "It moves around the room by itself.", h3: "A famous model is the 'Roomba'.", ans: "Robot Vacuum"},
+            {h1: "It is a Japanese sport.", h2: "The players are heavier than average.", h3: "They push each other in a ring.", ans: "Sumo"},
+            {h1: "It is an event held every 4 years.", h2: "Athletes from many countries compete.", h3: "The 2024 one was in Paris.", ans: "Olympics"},
+            {h1: "It is a global problem.", h2: "The Earth is getting warmer.", h3: "It causes ice to melt at the poles.", ans: "Climate Change"},
+            {h1: "It is a world-famous mountain.", h2: "It is visited by many people.", h3: "It is the highest mountain in Japan.", ans: "Mount Fuji"},
+            {h1: "It is a traditional garment.", h2: "It is usually worn at festivals.", h3: "It is made of light cotton.", ans: "Yukata"},
+            {h1: "It is a hobby from Japan.", h2: "It means 'empty orchestra'.", h3: "You sing songs in a private room.", ans: "Karaoke"},
+            {h1: "It is a landmark in the USA.", h2: "It was a gift from France.", h3: "She holds a torch in New York.", ans: "Statue of Liberty"},
+            {h1: "It is a giant star.", h2: "It is the center of our system.", h3: "Life on Earth is supported by it.", ans: "Sun"},
+            {h1: "It is an ancient building.", h2: "It was built for a king in Egypt.", h3: "It has a triangular shape.", ans: "Pyramid"},
+            {h1: "It is a person who goes to space.", h2: "They must train for many years.", h3: "They wear special white suits.", ans: "Astronaut"},
+            {h1: "It is a famous play writer.", h2: "He was born in England.", h3: "He wrote 'Romeo and Juliet'.", ans: "Shakespeare"},
+            {h1: "It is a modern technology.", h2: "It is used to create human-like text.", h3: "It stands for Artificial Intelligence.", ans: "AI"},
+            {h1: "It is a city in Japan.", h2: "It was the capital for a long time.", h3: "It is famous for many temples.", ans: "Kyoto"},
+            {h1: "It is a period of Japanese history.", h2: "It lasted for over 250 years.", h3: "It was the time of the Shoguns.", ans: "Edo Period"},
+            {h1: "It is a form of art.", h2: "It is made by folding paper.", h3: "The most famous shape is a crane.", ans: "Origami"},
+            {h1: "It is an ocean animal.", h2: "It is feared by many people.", h3: "It has many rows of sharp teeth.", ans: "Shark"},
+            {h1: "It is a social media app.", h2: "It is used for sharing short videos.", h3: "It is very popular with teenagers.", ans: "TikTok"}
+        ]
+    };
+
+    let currentSet = [];
+    let qIndex = -1;
+
+    function startQuiz(grade) {
+        // Shuffle the questions for variety
+        currentSet = [...data[grade]].sort(() => Math.random() - 0.5);
+        qIndex = -1; 
+        const badge = document.getElementById('grade-display');
+        badge.innerText = "Level: " + grade;
+        badge.style.background = `var(--${grade.toLowerCase()})`;
+        nextQ();
+    }
+
+    function reveal(n) {
+        if (qIndex === -1) return;
+        document.getElementById('h'+n).classList.add('visible');
+    }
+
+    function showAnswer() {
+        if (qIndex === -1) return;
+        const q = currentSet[qIndex];
+        document.getElementById('answer-area').style.display = 'block';
+        document.getElementById('ans-text').innerText = q.ans;
+        // Use a more reliable image source
+        document.getElementById('ans-img').src = `https://loremflickr.com/800/600/${encodeURIComponent(q.ans)}`;
+    }
+
+    function nextQ() {
+        if (currentSet.length === 0) return alert("Please select a grade first!");
+        
+        qIndex++;
+        if (qIndex >= currentSet.length) {
+            alert("End of set! Shuffling again...");
+            qIndex = 0;
+            currentSet.sort(() => Math.random() - 0.5);
+        }
+
+        // Reset UI
+        document.getElementById('answer-area').style.display = 'none';
+        for(let i=1; i<=3; i++) {
+            document.getElementById('h'+i).classList.remove('visible');
+            document.getElementById('h'+i).querySelector('.content').innerText = currentSet[qIndex]['h'+i];
+        }
+    }
+
+    // Keyboard Shortcuts
+    window.addEventListener('keydown', (e) => {
+        const key = e.key.toLowerCase();
+        if(key === '1') reveal(1);
+        if(key === '2') reveal(2);
+        if(key === '3') reveal(3);
+        if(key === 'a' || e.key === 'Enter') showAnswer();
+        if(key === 'n' || e.key === ' ') {
+            e.preventDefault(); // Stop spacebar scrolling
+            nextQ();
+        }
+    });
+</script>
+</body>
+</html>

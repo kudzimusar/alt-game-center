@@ -1,0 +1,1073 @@
+# CLASS QUIZ - GAME DESIGN DOCUMENT
+
+## Fast-Paced Multiple Choice Battles for JHS English
+
+-----
+
+## 🎮 GAME OVERVIEW
+
+**Game Name:** Class Quiz
+
+**Type:** Competitive Multiple Choice Quiz Battle
+
+**Format:** Kahoot-style fast-paced team competition
+
+**Duration:** 15-25 minutes per session
+
+**Players:** Whole class (teams or individuals)
+
+**Purpose:** Review grammar, vocabulary, and comprehension through exciting competition
+
+-----
+
+## 🎯 CORE GAME MECHANICS
+
+### Game Flow
+
+```
+1. SETUP (2 minutes)
+   ├─ Teacher selects quiz (grade + grammar point)
+   ├─ Students join game with names/team names
+   └─ Display game code for student devices (optional)
+
+2. QUESTION ROUND (10-20 minutes)
+   ├─ Display question + 4 answer choices
+   ├─ Timer starts (10-30 seconds depending on difficulty)
+   ├─ Students select answer on screen/device
+   ├─ Timer ends, answers locked
+   ├─ Reveal correct answer with explanation
+   ├─ Show scoreboard update
+   └─ Repeat for 10-20 questions
+
+3. FINAL RESULTS (3 minutes)
+   ├─ Display final leaderboard
+   ├─ Crown winner(s)
+   └─ Show statistics (accuracy, speed, etc.)
+```
+
+-----
+
+## 📱 VISUAL INTERFACE DESIGN
+
+### Teacher Display (Projected on Screen)
+
+**MAIN GAME SCREEN:**
+
+```
+┌─────────────────────────────────────────────────┐
+│  CLASS QUIZ - GRADE 2 - PAST SIMPLE            │
+│  Question 5 of 15                        ⏱️ 20  │
+├─────────────────────────────────────────────────┤
+│                                                 │
+│  What did you ___ yesterday?                    │
+│                                                 │
+│  🔵 A: do          🟢 B: does                   │
+│                                                 │
+│  🟡 C: did         🔴 D: doing                  │
+│                                                 │
+├─────────────────────────────────────────────────┤
+│  WAITING FOR ANSWERS...                         │
+│  ██████████████░░░░░░░░  15/30 answered        │
+└─────────────────────────────────────────────────┘
+```
+
+**ANSWER REVEAL SCREEN:**
+
+```
+┌─────────────────────────────────────────────────┐
+│  CORRECT ANSWER: C (did) ✓                     │
+├─────────────────────────────────────────────────┤
+│  "What did you do yesterday?"                   │
+│                                                 │
+│  💡 Explanation:                                 │
+│  Use "did" for past simple questions.           │
+│  Subject + did + base verb                      │
+│                                                 │
+│  Students who answered:                         │
+│  🔵 A: 5    🟢 B: 3    🟡 C: 22 ✓   🔴 D: 0    │
+├─────────────────────────────────────────────────┤
+│  TOP 3 LEADERBOARD:                             │
+│  🥇 Team Dragons: 4,500 pts                     │
+│  🥈 Team Phoenix: 4,200 pts                     │
+│  🥉 Team Tigers: 3,800 pts                      │
+└─────────────────────────────────────────────────┘
+```
+
+-----
+
+## 🏆 SCORING SYSTEM
+
+### Points Calculation
+
+**Base Points:**
+
+- Correct Answer: 1,000 points
+- Wrong Answer: 0 points
+
+**Speed Bonus:**
+
+- Answer in first 5 seconds: +500 bonus
+- Answer in 6-10 seconds: +300 bonus
+- Answer in 11-15 seconds: +100 bonus
+- Answer after 15 seconds: No bonus
+
+**Streak Bonus:**
+
+- 3 correct in a row: +200 bonus
+- 5 correct in a row: +500 bonus
+- 10 correct in a row: +1,000 bonus
+
+**Example:**
+Student answers correctly in 7 seconds with 2-answer streak:
+
+- Base: 1,000
+- Speed: +300
+- Total: 1,300 points
+
+-----
+
+## 🎲 GAME MODES
+
+### Mode 1: Team Battle (Default)
+
+- Class divided into 4-6 teams
+- Each team has a device or raises hand for answer
+- Team points combined
+- Encourages collaboration
+
+### Mode 2: Individual Race
+
+- Each student answers on own device
+- Personal leaderboard
+- Top 3 individuals win
+- Good for 1:1 device environments
+
+### Mode 3: Survival Mode
+
+- Start with all students standing
+- Wrong answer = sit down and eliminated
+- Last person/team standing wins
+- No devices needed - students show color cards
+
+### Mode 4: Lightning Round
+
+- 5-second timer per question
+- 20 rapid-fire questions
+- Tests quick thinking
+- High energy finale
+
+### Mode 5: Boss Battle
+
+- Teams face increasingly difficult questions
+- Each “level” has 3 questions
+- Must get 2/3 correct to advance
+- Reach final boss for bonus points
+
+-----
+
+## 📚 QUESTION STRUCTURE
+
+### Question Types
+
+**Type 1: Fill in the Blank**
+
+```
+Question: "I ___ to school yesterday."
+A) go
+B) goes
+C) went ✓
+D) going
+
+Grammar: Past Simple
+Difficulty: Easy
+Time: 15 seconds
+```
+
+**Type 2: Error Correction**
+
+```
+Question: "Find the mistake: She don't like apples."
+A) She → He
+B) don't → doesn't ✓
+C) like → likes
+D) apples → apple
+
+Grammar: Simple Present (negative)
+Difficulty: Medium
+Time: 20 seconds
+```
+
+**Type 3: Best Answer**
+
+```
+Question: "Which sentence is correct?"
+A) I am agree with you.
+B) I agree with you. ✓
+C) I agreeing with you.
+D) I am agreeing with you.
+
+Grammar: Stative verbs
+Difficulty: Medium
+Time: 20 seconds
+```
+
+**Type 4: Meaning Match**
+
+```
+Question: "I have lived here for 5 years." What does this mean?
+A) I lived here 5 years ago and moved.
+B) I started living here 5 years ago and still live here. ✓
+C) I will live here for 5 years.
+D) I want to live here for 5 years.
+
+Grammar: Present Perfect (duration)
+Difficulty: Hard
+Time: 25 seconds
+```
+
+**Type 5: Word Order**
+
+```
+Question: "Put in correct order: went / yesterday / I / shopping"
+A) I went shopping yesterday ✓
+B) Yesterday I shopping went
+C) I shopping went yesterday
+D) Went I yesterday shopping
+
+Grammar: Past Simple (sentence structure)
+Difficulty: Easy
+Time: 20 seconds
+```
+
+**Type 6: Vocabulary in Context**
+
+```
+Question: "The movie was ___. I fell asleep."
+A) exciting
+B) boring ✓
+C) interesting
+D) amazing
+
+Grammar: Adjectives
+Difficulty: Easy
+Time: 15 seconds
+```
+
+-----
+
+## 📊 CONTENT ORGANIZATION
+
+### Quiz Sets Structure
+
+Each quiz set contains:
+
+- **20 questions** (perfect for one class period)
+- **Mix of difficulties**: 8 Easy, 8 Medium, 4 Hard
+- **One grammar focus** or mixed review
+- **Progressive difficulty** (easy → medium → hard → mixed)
+
+### Annual Question Bank
+
+**Per Grade Level:**
+
+- 40 weeks × 2 quizzes per week = **80 quiz sets**
+- 80 sets × 20 questions = **1,600 questions per grade**
+- **Total: 4,800 questions across 3 grades**
+
+**Organization by Grammar Point:**
+
+**Grade 1 Example:**
+
+```
+Quiz Set G1-W01-A: Be Verbs (Introduction)
+├─ Questions 1-8: Easy fill-in-blanks
+├─ Questions 9-16: Medium error correction
+└─ Questions 17-20: Hard mixed application
+
+Quiz Set G1-W01-B: Be Verbs (Practice)
+├─ Questions 1-8: Easy questions different from Set A
+├─ Questions 9-16: Medium questions
+└─ Questions 17-20: Hard questions
+```
+
+-----
+
+## 🎨 VISUAL DESIGN ELEMENTS
+
+### Color Coding System
+
+**Answer Choices (Consistent):**
+
+- Option A: 🔵 Blue
+- Option B: 🟢 Green
+- Option C: 🟡 Yellow
+- Option D: 🔴 Red
+
+**Difficulty Indicators:**
+
+- ⭐ Easy (Green)
+- ⭐⭐ Medium (Yellow)
+- ⭐⭐⭐ Hard (Red)
+
+**Team Colors (Assigned automatically):**
+
+- Team 1: Purple Dragons 🟣
+- Team 2: Orange Phoenix 🟠
+- Team 3: Blue Tigers 🔵
+- Team 4: Green Pandas 🟢
+- Team 5: Red Sharks 🔴
+- Team 6: Pink Unicorns 🩷
+
+### Animations & Effects
+
+**During Question:**
+
+- Timer countdown animation
+- Pulsing answer choices when hovering
+- Sound effect when answer selected
+
+**After Answer:**
+
+- Confetti animation for correct answer
+- Sad trombone sound for wrong answer
+- Scoreboard animation sliding up
+- Crown icon for streak bonuses
+
+**Leaderboard:**
+
+- Teams move up/down with animation
+- Point numbers count up dynamically
+- Trophy icons for top 3
+
+-----
+
+## 🎯 SAMPLE QUIZ SETS
+
+### GRADE 1 - WEEK 5: CAN/CANNOT
+
+**Quiz Set G1-W05-A (20 questions)**
+
+**EASY QUESTIONS (1-8):**
+
+**Q1:** I ___ swim very well.
+
+- A) can ✓
+- B) cans
+- C) could
+- D) canning
+- **Grammar:** Can (ability)
+- **Time:** 15 sec
+
+**Q2:** She ___ speak English.
+
+- A) can ✓
+- B) can to
+- C) cans
+- D) could to
+- **Grammar:** Can (ability)
+- **Time:** 15 sec
+
+**Q3:** ___ you play the piano?
+
+- A) Can ✓
+- B) Do can
+- C) Are can
+- D) Could
+- **Grammar:** Can (question)
+- **Time:** 15 sec
+
+**Q4:** We ___ see the mountains from here.
+
+- A) can ✓
+- B) cans
+- C) could
+- D) can to
+- **Grammar:** Can (ability)
+- **Time:** 15 sec
+
+**Q5:** He ___ run fast.
+
+- A) can ✓
+- B) can to
+- C) cans
+- D) canning
+- **Grammar:** Can (ability)
+- **Time:** 15 sec
+
+**Q6:** ___ they cook?
+
+- A) Can ✓
+- B) Do can
+- C) Are can
+- D) Cans
+- **Grammar:** Can (question)
+- **Time:** 15 sec
+
+**Q7:** I ___ not fly.
+
+- A) can ✓
+- B) could
+- C) cans
+- D) cannot to
+- **Grammar:** Can (negative)
+- **Time:** 15 sec
+
+**Q8:** You ___ do it!
+
+- A) can ✓
+- B) can to
+- C) could to
+- D) cans
+- **Grammar:** Can (encouragement)
+- **Time:** 15 sec
+
+**MEDIUM QUESTIONS (9-16):**
+
+**Q9:** Which sentence is CORRECT?
+
+- A) I can to swim.
+- B) I can swim. ✓
+- C) I can swimming.
+- D) I cans swim.
+- **Grammar:** Can (structure)
+- **Time:** 20 sec
+
+**Q10:** Find the mistake: “She cans play guitar.”
+
+- A) She → He
+- B) cans → can ✓
+- C) play → plays
+- D) guitar → the guitar
+- **Grammar:** Can (error)
+- **Time:** 20 sec
+
+**Q11:** What is the negative form? “I can dance.”
+
+- A) I not can dance.
+- B) I cannot dance. ✓
+- C) I can not to dance.
+- D) I don’t can dance.
+- **Grammar:** Can (negative)
+- **Time:** 20 sec
+
+**Q12:** Choose the correct question: “_____ speak Japanese?”
+
+- A) You can
+- B) Do you can
+- C) Can you ✓
+- D) Are you can
+- **Grammar:** Can (question)
+- **Time:** 20 sec
+
+**Q13:** “Can you help me?” - What is the polite answer?
+
+- A) No.
+- B) I not can.
+- C) Yes, I can. ✓
+- D) Maybe I can help you not.
+- **Grammar:** Can (response)
+- **Time:** 20 sec
+
+**Q14:** Which shows ABILITY?
+
+- A) I can go tomorrow. (permission)
+- B) I can run fast. ✓ (ability)
+- C) Can I sit here? (permission)
+- D) You can leave. (permission)
+- **Grammar:** Can (meaning)
+- **Time:** 25 sec
+
+**Q15:** Put in order: “can / play / I / soccer”
+
+- A) I can play soccer ✓
+- B) I play can soccer
+- C) Can I play soccer
+- D) Play I can soccer
+- **Grammar:** Can (word order)
+- **Time:** 20 sec
+
+**Q16:** Find the mistake: “Can he to speak English?”
+
+- A) Can → Could
+- B) he → him
+- C) to speak → speak ✓
+- D) English → english
+- **Grammar:** Can (error)
+- **Time:** 20 sec
+
+**HARD QUESTIONS (17-20):**
+
+**Q17:** Which sentence has DIFFERENT meaning?
+
+- A) I can swim.
+- B) I am able to swim.
+- C) I must swim. ✓
+- D) I know how to swim.
+- **Grammar:** Can (meaning difference)
+- **Time:** 25 sec
+
+**Q18:** “I ___ help you yesterday.” (Past)
+
+- A) can
+- B) could ✓
+- C) can to
+- D) cans
+- **Grammar:** Can (past form - preview)
+- **Time:** 25 sec
+
+**Q19:** Which is the BEST response? “Can you come to my party?”
+
+- A) Yes, I do.
+- B) Yes, I will.
+- C) Yes, I can. Thanks! ✓
+- D) Yes, I go.
+- **Grammar:** Can (appropriate response)
+- **Time:** 25 sec
+
+**Q20:** All are correct EXCEPT:
+
+- A) I can play tennis.
+- B) Can you help me?
+- C) She cannot swim.
+- D) They can goes there. ✓
+- **Grammar:** Can (error identification)
+- **Time:** 30 sec
+
+-----
+
+### GRADE 2 - WEEK 9: REAL CONDITIONALS
+
+**Quiz Set G2-W09-A (20 questions)**
+
+**EASY QUESTIONS (1-8):**
+
+**Q1:** If it rains, I ___ stay home.
+
+- A) will ✓
+- B) would
+- C) am
+- D) can
+- **Grammar:** If + will
+- **Time:** 15 sec
+
+**Q2:** If you study hard, you ___ pass.
+
+- A) will ✓
+- B) would
+- C) can to
+- D) must to
+- **Grammar:** If + will
+- **Time:** 15 sec
+
+**Q3:** I will go if I ___ time.
+
+- A) have ✓
+- B) will have
+- C) had
+- D) has
+- **Grammar:** If + present simple
+- **Time:** 15 sec
+
+**Q4:** If she ___ late, we will wait.
+
+- A) is ✓
+- B) will be
+- C) was
+- D) were
+- **Grammar:** If + present simple
+- **Time:** 15 sec
+
+**Q5:** We will eat if the food ___ ready.
+
+- A) is ✓
+- B) will be
+- C) was
+- D) are
+- **Grammar:** If + present simple
+- **Time:** 15 sec
+
+**Q6:** If you ___ tired, you should rest.
+
+- A) are ✓
+- B) will be
+- C) were
+- D) is
+- **Grammar:** If + present simple
+- **Time:** 15 sec
+
+**Q7:** I ___ call you if I am free.
+
+- A) will ✓
+- B) would
+- C) am
+- D) can to
+- **Grammar:** If + will
+- **Time:** 15 sec
+
+**Q8:** If he comes, we ___ start the game.
+
+- A) will ✓
+- B) would
+- C) are
+- D) must to
+- **Grammar:** If + will
+- **Time:** 15 sec
+
+**MEDIUM QUESTIONS (9-16):**
+
+**Q9:** Which is CORRECT?
+
+- A) If it will rain, I stay home.
+- B) If it rains, I will stay home. ✓
+- C) If it rain, I will stay home.
+- D) If it rained, I will stay home.
+- **Grammar:** Conditional structure
+- **Time:** 20 sec
+
+**Q10:** Find the mistake: “If you will come early, we will have time.”
+
+- A) you → he
+- B) will come → come ✓
+- C) early → late
+- D) will have → have
+- **Grammar:** If clause error
+- **Time:** 20 sec
+
+**Q11:** Complete: “If I ___ hungry, I ___ eat.”
+
+- A) am, will ✓
+- B) will be, will
+- C) was, will
+- D) am, would
+- **Grammar:** If + present, will
+- **Time:** 20 sec
+
+**Q12:** What happens first? “If you study, you will pass.”
+
+- A) You pass
+- B) You study ✓
+- C) Both happen together
+- D) Neither happens
+- **Grammar:** Conditional logic
+- **Time:** 25 sec
+
+**Q13:** Change to conditional: “Study hard. You will succeed.”
+
+- A) If you study hard, you will succeed. ✓
+- B) If you will study hard, you succeed.
+- C) If you studied hard, you will succeed.
+- D) You study hard if you will succeed.
+- **Grammar:** Conditional formation
+- **Time:** 25 sec
+
+**Q14:** Which shows REAL possibility?
+
+- A) If I were rich, I would travel. (unreal)
+- B) If I have money, I will travel. ✓ (real)
+- C) If I had money, I would travel. (unreal)
+- D) If I could travel, I would go. (unreal)
+- **Grammar:** Real vs unreal conditionals
+- **Time:** 25 sec
+
+**Q15:** Put in order: “pass / if / will / you / you / study”
+
+- A) If you study, you will pass. ✓
+- B) You will pass if you study.  ✓ (both acceptable)
+- C) If you will study, you pass.
+- D) Study you will if pass you.
+- **Grammar:** Word order
+- **Time:** 20 sec
+
+**Q16:** Find the mistake: “If it rain tomorrow, I will bring umbrella.”
+
+- A) rain → rains ✓
+- B) tomorrow → yesterday
+- C) will bring → bring
+- D) umbrella → an umbrella (both errors, but grammar focus is A)
+- **Grammar:** Subject-verb agreement in if clause
+- **Time:** 20 sec
+
+**HARD QUESTIONS (17-20):**
+
+**Q17:** Which is DIFFERENT from the others?
+
+- A) If you ask, I will help.
+- B) I will help if you ask.
+- C) If you asked, I would help. ✓ (different - unreal conditional)
+- D) If you need help, I will come.
+- **Grammar:** Conditional type identification
+- **Time:** 30 sec
+
+**Q18:** Complete with BEST answer: “If you eat too much, ___”
+
+- A) you are fat.
+- B) you will get fat. ✓
+- C) you would get fat.
+- D) you got fat.
+- **Grammar:** Logical consequence
+- **Time:** 25 sec
+
+**Q19:** Which sentence means “This is possible”?
+
+- A) If I had a car, I would drive.
+- B) If I have a car, I will drive. ✓
+- C) If I had had a car, I would have driven.
+- D) If I could drive, I would go.
+- **Grammar:** Conditional meaning
+- **Time:** 25 sec
+
+**Q20:** Find the sentence with NO mistake:
+
+- A) If you will see him, tell him to call me.
+- B) If you see him, tell him to call me. ✓
+- C) If you saw him, tell him to call me.
+- D) If you seeing him, tell him to call me.
+- **Grammar:** Error identification
+- **Time:** 30 sec
+
+-----
+
+### GRADE 3 - WEEK 27: SECOND CONDITIONAL
+
+**Quiz Set G3-W27-A (20 questions)**
+
+**EASY QUESTIONS (1-8):**
+
+**Q1:** If I ___ rich, I would travel the world.
+
+- A) am
+- B) was
+- C) were ✓
+- D) will be
+- **Grammar:** Second conditional (were)
+- **Time:** 15 sec
+
+**Q2:** If I had a car, I ___ drive to school.
+
+- A) will
+- B) would ✓
+- C) can
+- D) could to
+- **Grammar:** Second conditional (would)
+- **Time:** 15 sec
+
+**Q3:** She would help if she ___ time.
+
+- A) has
+- B) will have
+- C) had ✓
+- D) have
+- **Grammar:** Second conditional (past simple)
+- **Time:** 15 sec
+
+**Q4:** If you ___ the president, what would you do?
+
+- A) are
+- B) were ✓
+- C) will be
+- D) was
+- **Grammar:** Second conditional (were)
+- **Time:** 15 sec
+
+**Q5:** I ___ buy a new phone if I had money.
+
+- A) will
+- B) would ✓
+- C) can
+- D) could to
+- **Grammar:** Second conditional (would)
+- **Time:** 15 sec
+
+**Q6:** If he knew the answer, he ___ tell you.
+
+- A) will
+- B) would ✓
+- C) can
+- D) might to
+- **Grammar:** Second conditional (would)
+- **Time:** 15 sec
+
+**Q7:** If I ___ you, I would study harder.
+
+- A) am
+- B) were ✓
+- C) will be
+- D) was
+- **Grammar:** “If I were you”
+- **Time:** 15 sec
+
+**Q8:** They would come if they ___ free.
+
+- A) are
+- B) will be
+- C) were ✓
+- D) was
+- **Grammar:** Second conditional (past simple)
+- **Time:** 15 sec
+
+**MEDIUM QUESTIONS (9-16):**
+
+**Q9:** Which is CORRECT?
+
+- A) If I am rich, I would travel.
+- B) If I were rich, I would travel. ✓
+- C) If I were rich, I will travel.
+- D) If I was rich, I would travel. (less formal but possible)
+- **Grammar:** Second conditional structure
+- **Time:** 20 sec
+
+**Q10:** Find the mistake: “If I will have a superpower, I would fly.”
+
+- A) I → you
+- B) will have → had ✓
+- C) would → will
+- D) fly → to fly
+- **Grammar:** Conditional error
+- **Time:** 20 sec
+
+**Q11:** Complete: “If she ___ harder, she ___ succeed.”
+
+- A) tries, will
+- B) tried, would ✓
+- C) will try, would
+- D) tried, will
+- **Grammar:** Second conditional
+- **Time:** 20 sec
+
+**Q12:** What does this mean? “If I were you, I would apologize.”
+
+- A) I am you and I apologize.
+- B) You should apologize. ✓ (advice)
+- C) I will apologize.
+- D) You will apologize.
+- **Grammar:** Second conditional (advice)
+- **Time:** 25 sec
+
+**Q13:** Which shows UNREAL/IMAGINARY situation?
+
+- A) If it rains, I will stay home. (real possibility)
+- B) If I had wings, I would fly. ✓ (unreal/impossible)
+- C) If you study, you will pass. (real possibility)
+- D) If I am late, I will call. (real possibility)
+- **Grammar:** Real vs unreal conditionals
+- **Time:** 25 sec
+
+**Q14:** Change to second conditional: “I don’t have money, so I can’t travel.”
+
+- A) If I have money, I can travel.
+- B) If I had money, I could travel. ✓
+- C) If I will have money, I could travel.
+- D) If I have money, I could travel.
+- **Grammar:** Conditional transformation
+- **Time:** 25 sec
+
+**Q15:** Put in order: “would / if / invisible / I / were / I / travel / free”
+
+- A) If I were invisible, I would travel free. ✓
+- B) I would travel free if I were invisible. ✓
+- C) If I invisible were, I would travel free.
+- D) I were invisible if I would travel free.
+- **Grammar:** Word order
+- **Time:** 25 sec
+
+**Q16:** Find the mistake: “If I could fly, I will go anywhere.”
+
+- A) I → you
+- B) could → can
+- C) will go → would go ✓
+- D) anywhere → somewhere
+- **Grammar:** Mixed conditional error
+- **Time:** 20 sec
+
+**HARD QUESTIONS (17-20):**
+
+**Q17:** Which is DIFFERENT meaning?
+
+- A) If I were rich, I would help people.
+- B) If I was rich, I would help people.
+- C) If I am rich, I will help people. ✓ (first conditional - different)
+- D) If I had money, I would help people.
+- **Grammar:** Conditional types
+- **Time:** 30 sec
+
+**Q18:** Choose the BEST completion: “If I knew the answer, ___”
+
+- A) I tell you.
+- B) I would tell you. ✓
+- C) I will tell you.
+- D) I told you.
+- **Grammar:** Appropriate conditional
+- **Time:** 25 sec
+
+**Q19:** Which expresses regret about NOW?
+
+- A) If I studied, I would pass.  ✓ (regret - I don’t study now)
+- B) If I had studied, I would have passed. (regret about past)
+- C) If I study, I will pass. (future possibility)
+- D) If I can study, I will pass. (future possibility)
+- **Grammar:** Conditional meaning/time
+- **Time:** 30 sec
+
+**Q20:** All are correct EXCEPT:
+
+- A) If I were you, I would try again.
+- B) If she had time, she would help.
+- C) If they were here, they would enjoy it.
+- D) If he will come, he would see it. ✓ (mixed conditional error)
+- **Grammar:** Error identification
+- **Time:** 30 sec
+
+-----
+
+## 📈 DIFFICULTY PROGRESSION
+
+### Within Each Quiz Set:
+
+- Questions 1-8: Foundation (Easy) - Build confidence
+- Questions 9-16: Application (Medium) - Test understanding
+- Questions 17-20: Challenge (Hard) - Stretch thinking
+
+### Across the Year:
+
+- **Weeks 1-10:** More easy questions (60% easy, 30% medium, 10% hard)
+- **Weeks 11-30:** Balanced mix (40% easy, 40% medium, 20% hard)
+- **Weeks 31-40:** More challenging (30% easy, 40% medium, 30% hard)
+
+-----
+
+## 🎓 EDUCATIONAL FEATURES
+
+### Built-in Learning
+
+**After Each Question:**
+
+- ✓ Show correct answer with green highlight
+- ✗ Show wrong answers grayed out
+- 💡 Display brief explanation (1-2 sentences)
+- 📊 Show class performance (% who got it right)
+- 📚 Reference grammar point
+
+**End of Quiz:**
+
+- Show which grammar points need review
+- Identify most-missed questions
+- Suggest related quiz sets for practice
+- Give encouragement based on performance
+
+### Teacher Controls
+
+**During Game:**
+
+- Pause button (for discussions)
+- Skip question (if too hard/easy)
+- Extend timer (if students need more time)
+- Repeat explanation
+- Show question statistics
+
+**After Game:**
+
+- Save results for record keeping
+- Export class performance data
+- Identify struggling students
+- Generate review questions
+
+-----
+
+## 🔧 TECHNICAL REQUIREMENTS
+
+### Display Options
+
+**Option 1: Single Screen (No Student Devices)**
+
+- Teacher projects questions
+- Students hold up A/B/C/D color cards
+- Or students raise hands for answers
+- Teacher manually inputs team answers
+
+**Option 2: Hybrid (Teacher Screen + Student Input)**
+
+- Teacher projects questions
+- Students answer on shared team device (tablet)
+- Automatic scoring
+
+**Option 3: Fully Digital (1:1 Devices)**
+
+- Each student has device
+- Join with game code
+- Individual or team mode
+- Automatic everything
+
+### Minimum Requirements
+
+- Works offline (questions pre-loaded)
+- Touch-friendly interface
+- Large, readable text
+- Color-blind accessible (use shapes + colors)
+- Sound effects (can be muted)
+
+-----
+
+## 🎉 ENGAGEMENT FEATURES
+
+### Power-Ups (Optional Advanced Feature)
+
+Students can earn power-ups for streaks:
+
+**50/50:** Remove 2 wrong answers
+**Double Points:** Next question worth 2x
+**Time Freeze:** Stop timer for 10 seconds
+**Shield:** Protect against 1 wrong answer
+
+### Achievements & Badges
+
+**During Game:**
+
+- “Speed Demon” - Answer in under 3 seconds
+- “Perfect Streak” - 5 correct in a row
+- “Comeback King” - Rise from last to first
+- “Consistent” - All answers within 10 seconds
+
+**Seasonal:**
+
+- “Quiz Master” - Win 10 quizzes
+- “Knowledge Seeker” - Play 50 quizzes
+- “Team Player” - Win 5 team battles
+
+-----
+
+## 📦 CONTENT DELIVERY
+
+### Quiz Library Organization
+
+```
+CLASS QUIZ
+├── GRADE 1
+│   ├── Grammar Focus
+│   │   ├── Be Verbs (8 quiz sets)
+│   │   ├── Can/Cannot (8 quiz sets)
+│   │   ├── Simple Present (12 quiz sets)
+│   │   ├── Present Progressive (8 quiz sets)
+│   │   └── Mixed Review (44 quiz sets)
+│   └── Vocabulary Focus
+│       ├── School Life (4 quiz sets)
+│       ├── Family & Friends (4 quiz sets)
+│       └── Hobbies (4 quiz sets)
+│
+├── GRADE 2
+│   ├── Grammar Focus
+│   │   ├── Past Simple (8 quiz sets)
+│   │   ├── Future (8 quiz sets)
+│   │   ├── Conditionals (8 quiz sets)
+│   │   ├── Infinitives (8 quiz sets)
+│   │   ├── Comparatives (8 quiz sets)
+│   │   ├── Passive Voice (8 quiz sets)
+│   │   └── Mixed Review (32 quiz sets)
+│   └── Vocabulary Focus
+│       └── Thematic (8 quiz sets)
+│
+└── GRADE 3
+    ├── Grammar Focus
+    │   ├── Present Perfect (12 quiz sets)
+    │   ├── Second Conditional (12 quiz sets)
+    │
+```

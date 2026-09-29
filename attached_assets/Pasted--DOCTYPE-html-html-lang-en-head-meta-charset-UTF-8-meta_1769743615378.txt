@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Master - Shadreck's Classroom</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap');
+        
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: #f1f5f9;
+            min-height: 100vh;
+            margin: 0;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        .gradient-jhs1 { background: linear-gradient(135deg, #0ea5e9, #2563eb); }
+        .gradient-jhs2 { background: linear-gradient(135deg, #f59e0b, #ea580c); }
+        .gradient-jhs3 { background: linear-gradient(135deg, #ec4899, #be185d); }
+
+        .hint-card {
+            transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+            opacity: 0;
+            transform: translateY(20px) scale(0.95);
+            display: none;
+        }
+
+        .hint-card.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            display: flex;
+        }
+
+        .letter-circle {
+            width: 4.5rem;
+            height: 4.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            color: #1e293b;
+            font-weight: 800;
+            font-size: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            border: 4px solid #e2e8f0;
+            animation: backInUp 0.5s;
+        }
+
+        .image-container {
+            width: 100%;
+            height: 550px;
+            background: #f8fafc;
+            border-radius: 2.5rem;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 10px solid #fff;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            position: relative;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .grammar-underline {
+            border-bottom: 5px solid #fbbf24;
+            padding-bottom: 2px;
+            color: #1e293b;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .floating { animation: float 3s ease-in-out infinite; }
+
+        .sidebar {
+            width: 80px;
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            background: #1e293b;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 0;
+            gap: 20px;
+            z-index: 50;
+        }
+
+        .side-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .side-btn:hover { transform: scale(1.1); filter: brightness(1.2); }
+
+        .main-content {
+            margin-left: 80px;
+            padding: 2rem;
+            padding-bottom: 15rem;
+        }
+
+        .score-pop { animation: pulse 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+
+        #loading-spinner {
+            position: absolute;
+            inset: 0;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.9);
+            z-index: 10;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="sidebar">
+    <div onclick="goHome()" class="side-btn bg-slate-700" title="Home (H)">
+        <i data-lucide="home"></i>
+    </div>
+    <div class="w-8 h-px bg-slate-600"></div>
+    <div onclick="setGrade('JHS1')" class="side-btn gradient-jhs1 font-bold">G1</div>
+    <div onclick="setGrade('JHS2')" class="side-btn gradient-jhs2 font-bold">G2</div>
+    <div onclick="setGrade('JHS3')" class="side-btn gradient-jhs3 font-bold">G3</div>
+</nav>
+
+<div class="main-content">
+    <div class="max-w-5xl mx-auto">
+        <header id="quiz-header" class="bg-white rounded-3xl p-6 shadow-xl flex items-center justify-between mb-8 border-b-8 border-slate-200 animate__animated animate__slideInDown">
+            <div class="flex items-center gap-4">
+                <div class="bg-blue-600 p-3 rounded-2xl text-white floating">
+                    <i data-lucide="graduation-cap" class="w-8 h-8"></i>
+                </div>
+                <div>
+                    <h1 class="text-3xl font-black text-slate-800 uppercase">New Horizon <span class="text-blue-600">Quiz</span></h1>
+                    <p class="text-slate-400 font-bold text-sm tracking-widest uppercase">Shadreck's Classroom</p>
+                </div>
+            </div>
+            <div id="grade-label" class="px-8 py-3 rounded-2xl text-white font-black text-xl bg-slate-400 shadow-inner">
+                WELCOME
+            </div>
+        </header>
+
+        <div id="grade-picker" class="grid grid-cols-1 md:grid-cols-3 gap-8 py-12 animate__animated animate__fadeInUp">
+            <div onclick="setGrade('JHS1')" class="group cursor-pointer">
+                <div class="gradient-jhs1 p-12 rounded-[3rem] text-white text-center shadow-2xl transition-all group-hover:-translate-y-4">
+                    <div class="text-6xl font-black mb-4">1</div>
+                    <div class="text-2xl font-bold opacity-90">GRADE</div>
+                </div>
+            </div>
+            <div onclick="setGrade('JHS2')" class="group cursor-pointer">
+                <div class="gradient-jhs2 p-12 rounded-[3rem] text-white text-center shadow-2xl transition-all group-hover:-translate-y-4">
+                    <div class="text-6xl font-black mb-4">2</div>
+                    <div class="text-2xl font-bold opacity-90">GRADE</div>
+                </div>
+            </div>
+            <div onclick="setGrade('JHS3')" class="group cursor-pointer">
+                <div class="gradient-jhs3 p-12 rounded-[3rem] text-white text-center shadow-2xl transition-all group-hover:-translate-y-4">
+                    <div class="text-6xl font-black mb-4">3</div>
+                    <div class="text-2xl font-bold opacity-90">GRADE</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="quiz-ui" class="hidden space-y-12 animate__animated animate__fadeIn">
+            <!-- Hints Section -->
+            <div id="hints-container" class="grid grid-cols-1 gap-6">
+                <div id="hint-1" class="hint-card bg-white p-8 rounded-[2.5rem] shadow-xl border-l-[20px] border-sky-500 items-center gap-8">
+                    <div class="bg-sky-100 text-sky-600 w-16 h-16 rounded-2xl flex items-center justify-center text-4xl font-black shrink-0">1</div>
+                    <p id="t1" class="text-4xl text-slate-700 font-bold leading-tight"></p>
+                </div>
+                <div id="hint-2" class="hint-card bg-white p-8 rounded-[2.5rem] shadow-xl border-l-[20px] border-amber-500 items-center gap-8">
+                    <div class="bg-amber-100 text-amber-600 w-16 h-16 rounded-2xl flex items-center justify-center text-4xl font-black shrink-0">2</div>
+                    <p id="t2" class="text-4xl text-slate-700 font-bold leading-tight"></p>
+                </div>
+                <div id="hint-3" class="hint-card bg-white p-8 rounded-[2.5rem] shadow-xl border-l-[20px] border-rose-500 items-center gap-8">
+                    <div class="bg-rose-100 text-rose-600 w-16 h-16 rounded-2xl flex items-center justify-center text-4xl font-black shrink-0">3</div>
+                    <p id="t3" class="text-4xl text-slate-700 font-bold leading-tight"></p>
+                </div>
+            </div>
+
+            <!-- Controls -->
+            <div id="action-btns" class="grid grid-cols-3 md:grid-cols-6 gap-4 bg-slate-900 p-5 rounded-[2.5rem] shadow-2xl">
+                <button onclick="revealHint(1)" class="bg-sky-500 text-white p-5 rounded-2xl font-black text-lg hover:scale-105 transition-all">HINT 1</button>
+                <button onclick="revealHint(2)" class="bg-amber-500 text-white p-5 rounded-2xl font-black text-lg hover:scale-105 transition-all">HINT 2</button>
+                <button onclick="revealHint(3)" class="bg-rose-500 text-white p-5 rounded-2xl font-black text-lg hover:scale-105 transition-all">HINT 3</button>
+                <button onclick="revealLetter()" class="bg-indigo-500 text-white p-5 rounded-2xl font-black text-lg hover:scale-105 transition-all">LETTER (L)</button>
+                <button onclick="showAnswer()" class="bg-emerald-500 text-white p-5 rounded-2xl font-black text-lg hover:scale-105 transition-all">ANSWER (⎵)</button>
+                <button onclick="nextQuestion()" class="bg-white text-slate-900 p-5 rounded-2xl font-black text-lg hover:bg-blue-50 transition-all">NEXT (N)</button>
+            </div>
+
+            <!-- Letter Display -->
+            <div id="letter-hint-container" class="flex gap-4 justify-center flex-wrap min-h-[6rem] py-4"></div>
+            
+            <!-- Answer Box -->
+            <div id="answer-box" class="hidden animate__animated animate__jackInTheBox">
+                <div class="bg-emerald-600 text-white rounded-t-[3rem] p-8 text-center shadow-inner">
+                    <h2 id="final-answer" class="text-8xl font-black uppercase tracking-tighter"></h2>
+                </div>
+                <div class="bg-white p-6 rounded-b-[3rem] shadow-2xl">
+                    <div class="image-container" id="img-frame">
+                        <div id="loading-spinner">
+                            <div class="w-16 h-16 border-8 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
+                            <p class="mt-4 font-bold text-slate-600">Fetching Real Image...</p>
+                        </div>
+                        <!-- SRC removed to prevent early onerror triggers -->
+                        <img id="answer-img" alt="Quiz Image" onerror="handleImageError()">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scores -->
+        <div id="score-area" class="mt-20 grid grid-cols-2 gap-8 animate__animated animate__fadeInUp">
+            <div class="bg-sky-100 rounded-[2.5rem] p-8 flex flex-col items-center shadow-lg border-b-8 border-sky-300">
+                <div class="flex items-center gap-3 text-sky-700 font-black text-2xl mb-4">TEAM A</div>
+                <div id="scoreA" class="text-8xl font-black text-slate-800">0</div>
+                <div class="flex gap-4 mt-6">
+                    <button onclick="updateScore('A', 10)" class="bg-sky-600 text-white w-20 h-20 rounded-2xl font-black text-3xl shadow-lg hover:scale-110 active:scale-95 transition-all">+10</button>
+                    <button onclick="updateScore('A', -10)" class="bg-white text-slate-300 w-16 h-16 rounded-2xl font-black text-2xl border-2 border-slate-200">-</button>
+                </div>
+            </div>
+            <div class="bg-amber-100 rounded-[2.5rem] p-8 flex flex-col items-center shadow-lg border-b-8 border-amber-300">
+                <div class="flex items-center gap-3 text-amber-700 font-black text-2xl mb-4">TEAM B</div>
+                <div id="scoreB" class="text-8xl font-black text-slate-800">0</div>
+                <div class="flex gap-4 mt-6">
+                    <button onclick="updateScore('B', 10)" class="bg-amber-600 text-white w-20 h-20 rounded-2xl font-black text-3xl shadow-lg hover:scale-110 active:scale-95 transition-all">+10</button>
+                    <button onclick="updateScore('B', -10)" class="bg-white text-slate-300 w-16 h-16 rounded-2xl font-black text-2xl border-2 border-slate-200">-</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const apiKey = ""; // Runtime provided
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Master - Shadreck's Classroom</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap');
+        
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: #f1f5f9;
+            min-height: 100vh;
+            margin: 0;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        .gradient-jhs1 { background: linear-gradient(135deg, #0ea5e9, #2563eb); }
+        .gradient-jhs2 { background: linear-gradient(135deg, #f59e0b, #ea580c); }
+        .gradient-jhs3 { background: linear-gradient(135deg, #ec4899, #be185d); }
+
+        .hint-card {
+            transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+            opacity: 0;
+            transform: translateY(20px) scale(0.95);
+            display: none;
+        }
+
+        .hint-card.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            display: flex;
+        }
+
+        .letter-circle {
+            width: 4.5rem;
+            height: 4.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            color: #1e293b;
+            font-weight: 800;
+            font-size: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            border: 4px solid #e2e8f0;
+            animation: backInUp 0.5s;
+        }
+
+        .image-container {
+            width: 100%;
+            height: 550px;
+            background: #f8fafc;
+            border-radius: 2.5rem;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 10px solid #fff;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            position: relative;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .grammar-underline {
+            border-bottom: 5px solid #fbbf24;
+            padding-bottom: 2px;
+            color: #1e293b;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .floating { animation: float 3s ease-in-out infinite; }
+
+        .sidebar {
+            width: 80px;
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            background: #1e293b;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 0;
+            gap: 20px;
+            z-index: 50;
+        }
+
+        .side-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .side-btn:hover { transform: scale(1.1); filter: brightness(1.2); }
+
+        .main-content {
+            margin-left: 80px;
+            padding: 2rem;
+            padding-bottom: 15rem;
+        }
+
+        #loading-spinner {
+            position: absolute;
+            inset: 0;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.9);
+            z-index: 10;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="sidebar">
+    <div onclick="goHome()" class="side-btn bg-slate-700" title="Home (H)">
+        <i data-lucide="home"></i>
+    </div>
+    <div class="w-8 h-px bg-slate-600"></div>
+    <div onclick="setGrade('JHS1')" class="side-btn gradient-jhs1 font-bold">G1</div>
+    <div onclick="setGrade('JHS2')" class="side-btn gradient-jhs2 font-bold">G2</div>
+    <div onclick="setGrade('JHS3')" class="side-btn gradient-jhs3 font-bold">G3</div>
+</nav>
+
+<div class="main-content">
+    <div class="max-w-5xl mx-auto">
+        <header id="quiz-header" class="bg-white rounded-3xl p-6 shadow-xl flex items-center justify-between mb-8 border-b-8 border-slate-200 animate__animated animate__slideInDown">
+            <div class="flex items-center gap-4">
+                <div class="bg-blue-600 p-3 rounded-2xl text-white floating">
+                    <i data-lucide="graduation-cap" class="w-8 h-8"></i>
+                </div>
+                <div>
+                    <h1 class="text-3xl font-black text-slate-800 uppercase">New Horizon <span class="text-blue-600">Quiz</span></h1>
+                    <p class="text-slate-400 font-bold text-sm tracking-widest uppercase">Shadreck's Classroom</p>
+                </div>
+            </div>
+            <div id="grade-label" class="px-8 py-3 rounded-2xl text-white font-black text-xl bg-slate-400 shadow-inner">
+                WELCOME
+            </div>
+        </header>
+
+        <div id="grade-picker" class="grid grid-cols-1 md:grid-cols-3 gap-8 py-12 animate__animated animate__fadeInUp">
+            <div onclick="setGrade('JHS1')" class="group cursor-pointer">
+                <div class="gradient-jhs1 p-12 rounded-[3rem] text-white text-center shadow-2xl transition-all group-hover:-translate-y-4">
+                    <div class="text-6xl font-black mb-4">1</div>
+                    <div class="text-2xl font-bold opacity-90">GRADE</div>
+                </div>
+            </div>
+            <div onclick="setGrade('JHS2')" class="group cursor-pointer">
+                <div class="gradient-jhs2 p-12 rounded-[3rem] text-white text-center shadow-2xl transition-all group-hover:-translate-y-4">
+                    <div class="text-6xl font-black mb-4">2</div>
+                    <div class="text-2xl font-bold opacity-90">GRADE</div>
+                </div>
+            </div>
+            <div onclick="setGrade('JHS3')" class="group cursor-pointer">
+                <div class="gradient-jhs3 p-12 rounded-[3rem] text-white text-center shadow-2xl transition-all group-hover:-translate-y-4">
+                    <div class="text-6xl font-black mb-4">3</div>
+                    <div class="text-2xl font-bold opacity-90">GRADE</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="quiz-ui" class="hidden space-y-12 animate__animated animate__fadeIn">
+            <div id="hints-container" class="grid grid-cols-1 gap-6">
+                <div id="hint-1" class="hint-card bg-white p-8 rounded-[2.5rem] shadow-xl border-l-[20px] border-sky-500 items-center gap-8">
+                    <div class="bg-sky-100 text-sky-600 w-16 h-16 rounded-2xl flex items-center justify-center text-4xl font-black shrink-0">1</div>
+                    <p id="t1" class="text-4xl text-slate-700 font-bold leading-tight"></p>
+                </div>
+                <div id="hint-2" class="hint-card bg-white p-8 rounded-[2.5rem] shadow-xl border-l-[20px] border-amber-500 items-center gap-8">
+                    <div class="bg-amber-100 text-amber-600 w-16 h-16 rounded-2xl flex items-center justify-center text-4xl font-black shrink-0">2</div>
+                    <p id="t2" class="text-4xl text-slate-700 font-bold leading-tight"></p>
+                </div>
+                <div id="hint-3" class="hint-card bg-white p-8 rounded-[2.5rem] shadow-xl border-l-[20px] border-rose-500 items-center gap-8">
+                    <div class="bg-rose-100 text-rose-600 w-16 h-16 rounded-2xl flex items-center justify-center text-4xl font-black shrink-0">3</div>
+                    <p id="t3" class="text-4xl text-slate-700 font-bold leading-tight"></p>
+                </div>
+            </div>
+
+            <div id="action-btns" class="grid grid-cols-3 md:grid-cols-6 gap-4 bg-slate-900 p-5 rounded-[2.5rem] shadow-2xl">
+                <button onclick="revealHint(1)" class="bg-sky-500 text-white p-5 rounded-2xl font-black text-lg hover:scale-105 transition-all">HINT 1</button>
+                <button onclick="revealHint(2)" class="bg-amber-500 text-white p-5 rounded-2xl font-black text-lg hover:scale-105 transition-all">HINT 2</button>
+                <button onclick="revealHint(3)" class="bg-rose-500 text-white p-5 rounded-2xl font-black text-lg hover:scale-105 transition-all">HINT 3</button>
+                <button onclick="revealLetter()" class="bg-indigo-500 text-white p-5 rounded-2xl font-black text-lg hover:scale-105 transition-all">LETTER (L)</button>
+                <button onclick="showAnswer()" class="bg-emerald-500 text-white p-5 rounded-2xl font-black text-lg hover:scale-105 transition-all">ANSWER (⎵)</button>
+                <button onclick="nextQuestion()" class="bg-white text-slate-900 p-5 rounded-2xl font-black text-lg hover:bg-blue-50 transition-all">NEXT (N)</button>
+            </div>
+
+            <div id="letter-hint-container" class="flex gap-4 justify-center flex-wrap min-h-[6rem] py-4"></div>
+            
+            <div id="answer-box" class="hidden animate__animated animate__jackInTheBox">
+                <div class="bg-emerald-600 text-white rounded-t-[3rem] p-8 text-center shadow-inner">
+                    <h2 id="final-answer" class="text-8xl font-black uppercase tracking-tighter"></h2>
+                </div>
+                <div class="bg-white p-6 rounded-b-[3rem] shadow-2xl">
+                    <div class="image-container" id="img-frame">
+                        <div id="loading-spinner">
+                            <div class="w-16 h-16 border-8 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
+                            <p class="mt-4 font-bold text-slate-600 italic">Finding the perfect image...</p>
+                        </div>
+                        <img id="answer-img" alt="Quiz Image" onerror="handleImageError()">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="score-area" class="mt-20 grid grid-cols-2 gap-8 animate__animated animate__fadeInUp">
+            <div class="bg-sky-100 rounded-[2.5rem] p-8 flex flex-col items-center shadow-lg border-b-8 border-sky-300">
+                <div class="flex items-center gap-3 text-sky-700 font-black text-2xl mb-4">TEAM A</div>
+                <div id="scoreA" class="text-8xl font-black text-slate-800">0</div>
+                <div class="flex gap-4 mt-6">
+                    <button onclick="updateScore('A', 10)" class="bg-sky-600 text-white w-20 h-20 rounded-2xl font-black text-3xl shadow-lg hover:scale-110 active:scale-95 transition-all">+10</button>
+                    <button onclick="updateScore('A', -10)" class="bg-white text-slate-300 w-16 h-16 rounded-2xl font-black text-2xl border-2 border-slate-200">-</button>
+                </div>
+            </div>
+            <div class="bg-amber-100 rounded-[2.5rem] p-8 flex flex-col items-center shadow-lg border-b-8 border-amber-300">
+                <div class="flex items-center gap-3 text-amber-700 font-black text-2xl mb-4">TEAM B</div>
+                <div id="scoreB" class="text-8xl font-black text-slate-800">0</div>
+                <div class="flex gap-4 mt-6">
+                    <button onclick="updateScore('B', 10)" class="bg-amber-600 text-white w-20 h-20 rounded-2xl font-black text-3xl shadow-lg hover:scale-110 active:scale-95 transition-all">+10</button>
+                    <button onclick="updateScore('B', -10)" class="bg-white text-slate-300 w-16 h-16 rounded-2xl font-black text-2xl border-2 border-slate-200">-</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const apiKey = "";
+    const quizData = {
+        JHS1: [
+            {h1: "<span class='grammar-underline'>What</span> sport do you play with a round orange ball?", h2: "<span class='grammar-underline'>Where</span> is the hoop? Is it high or low?", h3: "I <span class='grammar-underline'>can</span> dribble and shoot in this game.", ans: "Basketball", query: "basketball", category: "sport"},
+            {h1: "<span class='grammar-underline'>Who</span> is the detective boy with glasses from Beika?", h2: "<span class='grammar-underline'>What</span> does he use? A bow tie that changes his voice?", h3: "He <span class='grammar-underline'>can</span> solve any mystery.", ans: "Conan", query: "detective conan", category: "anime character"},
+            {h1: "<span class='grammar-underline'>Where</span> do you see many fish swimming together?", h2: "<span class='grammar-underline'>What</span> color is the water? Is it blue or green?", h3: "I <span class='grammar-underline'>like swimming</span> here in summer.", ans: "Ocean", query: "beautiful ocean", category: "nature"},
+            {h1: "<span class='grammar-underline'>What</span> Japanese food is round and has rice inside?", h2: "<span class='grammar-underline'>Where</span> can you buy it? At a convenience store?", h3: "I <span class='grammar-underline'>want to try</span> the tuna and salmon ones.", ans: "Onigiri", query: "rice ball", category: "food"},
+            {h1: "<span class='grammar-underline'>Who</span> is the Italian plumber in red overalls?", h2: "<span class='grammar-underline'>What</span> does he jump on? Mushrooms and turtles?", h3: "He <span class='grammar-underline'>can jump</span> very high to save the princess.", ans: "Mario", query: "super mario bros", category: "video game character"},
+            {h1: "<span class='grammar-underline'>What</span> season comes after summer? Is it cool?", h2: "<span class='grammar-underline'>When</span> do the leaves turn red and yellow?", h3: "I <span class='grammar-underline'>like</span> this season because it's not too hot.", ans: "Autumn", query: "autumn leaves", category: "season"},
+            {h1: "<span class='grammar-underline'>Where</span> is the famous big clock tower in London?", h2: "<span class='grammar-underline'>What</span> is its nickname? Big Something?", h3: "This <span class='grammar-underline'>is</span> a very old and tall building.", ans: "Big Ben", query: "london big ben", category: "landmark"},
+            {h1: "<span class='grammar-underline'>What</span> animal is black and white and eats bamboo?", h2: "<span class='grammar-underline'>Where</span> does it live? In China or Japan?", h3: "This animal <span class='grammar-underline'>is</span> very cute and lazy.", ans: "Panda", query: "giant panda", category: "animal"},
+            {h1: "<span class='grammar-underline'>Who</span> is your mother's sister?", h2: "<span class='grammar-underline'>What</span> do you call her?", h3: "She <span class='grammar-underline'>is</span> part of your family.", ans: "Aunt", query: "aunt", category: "family member"},
+            {h1: "<span class='grammar-underline'>What</span> do you use to write on paper? Is it wooden?", h2: "<span class='grammar-underline'>Where</span> do you keep it? In your pencil case?", h3: "I <span class='grammar-underline'>can</span> draw pictures with this.", ans: "Pencil", query: "pencil", category: "stationery"},
+            {h1: "<span class='grammar-underline'>What</span> yellow fruit do monkeys love to eat?", h2: "<span class='grammar-underline'>Where</span> does it grow? On a tree?", h3: "This fruit <span class='grammar-underline'>is</span> soft and sweet inside.", ans: "Banana", query: "yellow banana", category: "fruit"},
+            {h1: "<span class='grammar-underline'>Who</span> is the ninja boy with a dream to be Hokage?", h2: "<span class='grammar-underline'>What</span> color is his hair? Orange or yellow?", h3: "He <span class='grammar-underline'>can</span> make many shadow clones.", ans: "Naruto", query: "naruto uzumaki", category: "anime character"},
+            {h1: "<span class='grammar-underline'>What</span> do you ride to go to school? It has two wheels.", h2: "<span class='grammar-underline'>Where</span> do you keep it? Outside your house?", h3: "I <span class='grammar-underline'>can ride</span> this very fast.", ans: "Bicycle", query: "bicycle", category: "vehicle"},
+            {h1: "<span class='grammar-underline'>Where</span> is Mount Fuji located? Shizuoka and one more?", h2: "<span class='grammar-underline'>What</span> color is the top? White from snow?", h3: "This mountain <span class='grammar-underline'>is</span> the tallest in Japan.", ans: "Yamanashi", query: "yamanashi japan map", category: "prefecture"},
+            {h1: "<span class='grammar-underline'>What</span> sport uses a bat and a small white ball?", h2: "<span class='grammar-underline'>Who</span> is famous? Shohei Ohtani?", h3: "I <span class='grammar-underline'>like playing</span> this sport in summer.", ans: "Baseball", query: "baseball player", category: "sport"},
+            {h1: "<span class='grammar-underline'>What</span> do you say when you meet someone for the first time?", h2: "<span class='grammar-underline'>When</span> do you use this greeting?", h3: "This <span class='grammar-underline'>is</span> a polite way to introduce yourself.", ans: "Nice to meet you", query: "people shaking hands", category: "greeting"},
+            {h1: "<span class='grammar-underline'>Who</span> delivers presents to children on December 25th?", h2: "<span class='grammar-underline'>What</span> does he ride? A sleigh with animals?", h3: "He <span class='grammar-underline'>can fly</span> in the sky at night.", ans: "Santa", query: "santa claus", category: "character"},
+            {h1: "<span class='grammar-underline'>What</span> Japanese noodle is long and thin?", h2: "<span class='grammar-underline'>Where</span> can you eat it? At a ramen shop?", h3: "I <span class='grammar-underline'>like eating</span> this with hot soup.", ans: "Ramen", query: "delicious ramen", category: "food"},
+            {h1: "<span class='grammar-underline'>What</span> number comes after nine and before eleven?", h2: "<span class='grammar-underline'>How many</span> fingers do you have?", h3: "This number <span class='grammar-underline'>is</span> written as 10.", ans: "Ten", query: "number 10", category: "number"},
+            {h1: "<span class='grammar-underline'>Where</span> do students go every day to study?", h2: "<span class='grammar-underline'>What</span> do you wear there? A uniform?", h3: "This place <span class='grammar-underline'>is</span> where you learn many subjects.", ans: "School", query: "school building", category: "place"}
+        ],
+        JHS2: [
+            {h1: "I <span class='grammar-underline'>am sure that</span> this is the longest wall in the world.", h2: "It <span class='grammar-underline'>is important to</span> protect it for history.", h3: "I enjoy <span class='grammar-underline'>learning</span> about its construction in ancient China.", ans: "Great Wall", query: "great wall of china", category: "landmark"},
+            {h1: "You <span class='grammar-underline'>have to</span> be careful when this shakes the ground.", h2: "I <span class='grammar-underline'>know how to</span> hide under a desk when it happens.", h3: "I <span class='grammar-underline'>am sure that</span> Japan has many of these every year.", ans: "Earthquake", query: "earthquake disaster", category: "phenomenon"},
+            {h1: "I <span class='grammar-underline'>think that</span> this castle is the most beautiful in Japan.", h2: "It <span class='grammar-underline'>is</span> white and located in Hyogo Prefecture.", h3: "I enjoy <span class='grammar-underline'>visiting</span> this UNESCO World Heritage site.", ans: "Himeji Castle", query: "himeji castle", category: "landmark"},
+            {h1: "We <span class='grammar-underline'>must</span> recycle these to save the environment.", h2: "I <span class='grammar-underline'>can show you how to</span> separate them properly.", h3: "I <span class='grammar-underline'>am sure that</span> we drink water from these every day.", ans: "Plastic Bottles", query: "plastic bottles", category: "object"},
+            {h1: "I <span class='grammar-underline'>am sure that</span> this fruit is red and sweet in summer.", h2: "It <span class='grammar-underline'>is important to</span> wash it before eating.", h3: "I enjoy <span class='grammar-underline'>picking</span> these at a farm in spring.", ans: "Strawberry", query: "strawberry", category: "fruit"},
+            {h1: "You <span class='grammar-underline'>have to</span> cross this to go from Honshu to Shikoku.", h2: "I <span class='grammar-underline'>think that</span> it is one of the longest in the world.", h3: "I <span class='grammar-underline'>am sure that</span> many cars and bicycles use this daily.", ans: "Seto Bridge", query: "seto ohashi bridge", category: "landmark"},
+            {h1: "I <span class='grammar-underline'>am sure that</span> this anime character loves to eat and fight.", h2: "He <span class='grammar-underline'>has to</span> collect seven magical balls.", h3: "I enjoy <span class='grammar-underline'>watching</span> him transform into Super Saiyan.", ans: "Goku", query: "son goku", category: "anime character"},
+            {h1: "We <span class='grammar-underline'>must</span> bow to show respect in Japan.", h2: "I <span class='grammar-underline'>can show you how to</span> greet someone politely.", h3: "<span class='grammar-underline'>Doing</span> this is a traditional Japanese custom.", ans: "Bow", query: "japanese people bowing", category: "culture"},
+            {h1: "I <span class='grammar-underline'>think that</span> this is the oldest wooden temple in Japan.", h2: "It <span class='grammar-underline'>is</span> located in Nara and built in 607.", h3: "I enjoy <span class='grammar-underline'>learning</span> about Prince Shotoku who built it.", ans: "Horyuji", query: "horyuji temple", category: "landmark"},
+            {h1: "You <span class='grammar-underline'>have to</span> wear this traditional Japanese clothing for festivals.", h2: "I <span class='grammar-underline'>am sure that</span> it has beautiful patterns and colors.", h3: "I enjoy <span class='grammar-underline'>wearing</span> this during summer matsuri.", ans: "Yukata", query: "summer yukata", category: "clothing"},
+            {h1: "I <span class='grammar-underline'>am sure that</span> this sport started in Japan over 1000 years ago.", h2: "You <span class='grammar-underline'>must</span> be very big and strong to do it.", h3: "I enjoy <span class='grammar-underline'>watching</span> the wrestlers push each other out of the ring.", ans: "Sumo", query: "sumo wrestler", category: "sport"},
+            {h1: "I <span class='grammar-underline'>think that</span> this country is famous for pizza and pasta.", h2: "It <span class='grammar-underline'>is important to</span> visit Rome and Venice.", h3: "I enjoy <span class='grammar-underline'>learning</span> about the Colosseum and Roman history.", ans: "Italy", query: "italy landmarks", category: "country"},
+            {h1: "We <span class='grammar-underline'>must</span> take off our shoes before entering a house.", h2: "I <span class='grammar-underline'>can show you how to</span> place them neatly at the entrance.", h3: "<span class='grammar-underline'>Following</span> this rule is very important in Japanese culture.", ans: "Genkan", query: "japanese entrance hall", category: "culture"},
+            {h1: "I <span class='grammar-underline'>am sure that</span> this athlete won two gold medals in 2021.", h2: "She <span class='grammar-underline'>has to</span> practice swimming every day.", h3: "I enjoy <span class='grammar-underline'>watching</span> her compete in the Olympics.", ans: "Ohashi Yui", query: "yui ohashi swimming", category: "athlete"},
+            {h1: "You <span class='grammar-underline'>have to</span> use chopsticks to eat this hot pot dish.", h2: "I <span class='grammar-underline'>think that</span> it is perfect for cold winter nights.", h3: "I enjoy <span class='grammar-underline'>eating</span> meat and vegetables in the boiling soup.", ans: "Shabu-shabu", query: "shabu shabu hotpot", category: "food"},
+            {h1: "I <span class='grammar-underline'>am sure that</span> this festival happens every summer in Tohoku.", h2: "It <span class='grammar-underline'>is important to</span> see the huge colorful floats and dancers.", h3: "I enjoy <span class='grammar-underline'>watching</span> the Nebuta parade in Aomori.", ans: "Nebuta Festival", query: "nebuta matsuri", category: "festival"},
+            {h1: "We <span class='grammar-underline'>must</span> be quiet in this sacred place with red torii gates.", h2: "I <span class='grammar-underline'>can show you how to</span> pray at a Japanese shrine.", h3: "<span class='grammar-underline'>Visiting</span> shrines during New Year is a tradition.", ans: "Shrine", query: "japanese shrine", category: "landmark"},
+            {h1: "I <span class='grammar-underline'>think that</span> this volcano last erupted in 1707.", h2: "It <span class='grammar-underline'>is important to</span> know that it is still active today.", h3: "I <span class='grammar-underline'>am sure that</span> this is Japan's most famous mountain.", ans: "Mt. Fuji", query: "mount fuji", category: "landmark"},
+            {h1: "You <span class='grammar-underline'>have to</span> be 18 years old to drive this in Japan.", h2: "I <span class='grammar-underline'>know how to</span> use the steering wheel and pedals.", h3: "I enjoy <span class='grammar-underline'>riding</span> in this with my family on road trips.", ans: "Car", query: "modern car", category: "vehicle"},
+            {h1: "I <span class='grammar-underline'>am sure that</span> this K-pop group is famous worldwide.", h2: "They <span class='grammar-underline'>have to</span> practice dancing and singing every day.", h3: "I enjoy <span class='grammar-underline'>listening</span> to their music and learning Korean.", ans: "BTS", query: "bts kpop group", category: "music group"}
+        ],
+        JHS3: [
+            {h1: "I <span class='grammar-underline'>have visited</span> this pyramid in Egypt many times in my dreams.", h2: "This is <span class='grammar-underline'>a monument that</span> was built 4,500 years ago.", h3: "Tell me <span class='grammar-underline'>what you know</span> about the pharaohs buried here.", ans: "Great Pyramid", query: "pyramids of giza", category: "ancient landmark"},
+            {h1: "The scientist <span class='grammar-underline'>working</span> on relativity changed our understanding of the universe.", h2: "This is <span class='grammar-underline'>a person who</span> won the Nobel Prize in Physics.", h3: "I <span class='grammar-underline'>wish I could</span> understand his famous equation E=mc².", ans: "Einstein", query: "albert einstein", category: "scientist"},
+            {h1: "I <span class='grammar-underline'>have been learning</span> about this traditional Japanese theater for months.", h2: "It is <span class='grammar-underline'>a performance that</span> uses elaborate costumes and masks.", h3: "The actors <span class='grammar-underline'>make the audience</span> feel deep emotions through slow movements.", ans: "Noh", query: "noh theatre mask", category: "traditional art"},
+            {h1: "I <span class='grammar-underline'>have never seen</span> a building as tall as this one in Dubai.", h2: "This is <span class='grammar-underline'>a tower known</span> for being the tallest in the world.", h3: "If I <span class='grammar-underline'>went</span> there, I <span class='grammar-underline'>would</span> take an elevator to the top floor.", ans: "Burj Khalifa", query: "burj khalifa", category: "landmark"},
+            {h1: "The boy <span class='grammar-underline'>hunting</span> demons with his sister is very determined.", h2: "This is <span class='grammar-underline'>a story that</span> takes place in Taisho-era Japan.", h3: "I <span class='grammar-underline'>want you to</span> tell me which breathing technique is your favorite.", ans: "Tanjiro", query: "tanjiro kamado", category: "anime character"},
+            {h1: "I <span class='grammar-underline'>have been studying</span> this language because I want to travel to France.", h2: "It is <span class='grammar-underline'>a language spoken</span> in many countries across the world.", h3: "Tell me <span class='grammar-underline'>how many words</span> you know in this romantic language.", ans: "French", query: "france landmarks", category: "language culture"},
+            {h1: "The woman <span class='grammar-underline'>fighting</span> for peace won the Nobel Prize in 1979.", h2: "This is <span class='grammar-underline'>a person who</span> helped the poor in Kolkata, India.", h3: "I <span class='grammar-underline'>have heard</span> that her kindness inspired millions of people.", ans: "Mother Teresa", query: "mother teresa", category: "famous person"},
+            {h1: "I <span class='grammar-underline'>have just finished</span> reading this Japanese folktale about a bamboo cutter.", h2: "It is <span class='grammar-underline'>a story that</span> features a princess from the moon.", h3: "The princess <span class='grammar-underline'>makes everyone</span> who meets her fall in love with her beauty.", ans: "Kaguya-hime", query: "kaguya hime", category: "mythology"},
+            {h1: "The player <span class='grammar-underline'>scoring</span> goals for Real Madrid is from France.", h2: "This is <span class='grammar-underline'>a striker who</span> won the World Cup in 2018.", h3: "I <span class='grammar-underline'>wish I could</span> run as fast as him on the field.", ans: "Mbappe", query: "kylian mbappe", category: "athlete"},
+            {h1: "I <span class='grammar-underline'>have been watching</span> this anime about volleyball for weeks.", h2: "It is <span class='grammar-underline'>a show that</span> features a short but talented player.", h3: "The team <span class='grammar-underline'>helps each other</span> reach the national tournament.", ans: "Haikyuu", query: "haikyuu anime", category: "anime"},
+            {h1: "I <span class='grammar-underline'>have visited</span> this ancient wall that protected the Roman Empire.", h2: "This is <span class='grammar-underline'>a structure built</span> in northern England by Emperor Hadrian.", h3: "If I <span class='grammar-underline'>were</span> a Roman soldier, I <span class='grammar-underline'>would</span> have walked along this wall.", ans: "Hadrian's Wall", query: "hadrian's wall england", category: "landmark"},
+            {h1: "The inventor <span class='grammar-underline'>creating</span> the light bulb changed the world forever.", h2: "This is <span class='grammar-underline'>a person who</span> had over 1,000 patents.", h3: "I <span class='grammar-underline'>have learned</span> that his laboratory was in New Jersey, USA.", ans: "Edison", query: "thomas edison", category: "inventor"},
+            {h1: "I <span class='grammar-underline'>have been reading</span> this manga about a rubber boy searching for treasure.", h2: "It is <span class='grammar-underline'>a series that</span> has been running since 1997.", h3: "The captain <span class='grammar-underline'>wants everyone to</span> join his pirate crew.", ans: "One Piece", query: "monkey d luffy", category: "anime character"},
+            {h1: "The leader <span class='grammar-underline'>speaking</span> about peace inspired millions with his dream.", h2: "This is <span class='grammar-underline'>a person who</span> fought for civil rights in America.", h3: "I <span class='grammar-underline'>have heard</span> his famous speech that starts with 'I have a dream'.", ans: "Martin Luther King Jr.", query: "martin luther king jr", category: "famous leader"},
+            {h1: "I <span class='grammar-underline'>have never tasted</span> this traditional Japanese soup with miso paste.", h2: "It is <span class='grammar-underline'>a dish made</span> with tofu, seaweed, and dashi.", h3: "If I <span class='grammar-underline'>had</span> this every morning, I <span class='grammar-underline'>would</span> be very healthy.", ans: "Miso Soup", query: "miso soup", category: "food"},
+            {h1: "The artist <span class='grammar-underline'>painting</span> sunflowers lived in the Netherlands.", h2: "This is <span class='grammar-underline'>a painter who</span> cut off his own ear.", h3: "I <span class='grammar-underline'>wish I could</span> see his 'Starry Night' painting in person.", ans: "Van Gogh", query: "vincent van gogh", category: "artist"},
+            {h1: "I <span class='grammar-underline'>have been practicing</span> this martial art that originated in Okinawa.", h2: "It is <span class='grammar-underline'>a sport that</span> uses punches, kicks, and kata forms.", h3: "The master <span class='grammar-underline'>helps students</span> develop discipline and respect.", ans: "Karate", query: "karate", category: "sport"},
+            {h1: "The composer <span class='grammar-underline'>creating</span> beautiful symphonies became deaf later in life.", h2: "This is <span class='grammar-underline'>a musician who</span> wrote 'Symphony No. 9'.", h3: "I <span class='grammar-underline'>have listened</span> to his music many times in music class.", ans: "Beethoven", query: "ludwig van beethoven", category: "musician"},
+            {h1: "I <span class='grammar-underline'>have just learned</span> about this ancient city buried by a volcano.", h2: "This is <span class='grammar-underline'>a place that</span> was covered by ash from Mt. Vesuvius in 79 AD.", h3: "Tell me <span class='grammar-underline'>what archaeologists found</span> when they excavated the ruins.", ans: "Pompeii", query: "pompeii ruins", category: "landmark"},
+            {h1: "The writer <span class='grammar-underline'>creating</span> the Harry Potter series is from England.", h2: "This is <span class='grammar-underline'>a person who</span> wrote seven magical books.", h3: "I <span class='grammar-underline'>have read</span> all her books about wizards and witches.", ans: "J.K. Rowling", query: "j k rowling", category: "famous author"}
+        ]
+    };
+
+    let currentGrade = null;
+    let currentQuestions = [];
+    let qIndex = 0;
+    let revealedLettersCount = 0;
+    let teamScores = { A: 0, B: 0 };
+    let isQuizActive = false;
+
+    function setGrade(grade) {
+        currentGrade = grade;
+        currentQuestions = [...quizData[grade]].sort(() => Math.random() - 0.5);
+        qIndex = 0;
+        isQuizActive = true;
+        document.getElementById('grade-picker').classList.add('hidden');
+        document.getElementById('quiz-ui').classList.remove('hidden');
+        document.getElementById('grade-label').innerText = grade;
+        loadQuestion();
+    }
+
+    function loadQuestion() {
+        const q = currentQuestions[qIndex];
+        document.getElementById('t1').innerHTML = q.h1;
+        document.getElementById('t2').innerHTML = q.h2;
+        document.getElementById('t3').innerHTML = q.h3;
+        document.querySelectorAll('.hint-card').forEach(c => c.classList.remove('visible'));
+        document.getElementById('letter-hint-container').innerHTML = '';
+        document.getElementById('answer-box').classList.add('hidden');
+        document.getElementById('answer-img').removeAttribute('src');
+        revealedLettersCount = 0;
+        lucide.createIcons();
+    }
+
+    function revealHint(n) {
+        document.getElementById(`hint-${n}`).classList.add('visible');
+    }
+
+    function revealLetter() {
+        const answer = currentQuestions[qIndex].ans;
+        if (revealedLettersCount < answer.length) {
+            const char = answer[revealedLettersCount];
+            const circle = document.createElement('div');
+            circle.className = 'letter-circle';
+            circle.innerText = char === ' ' ? '' : char.toUpperCase();
+            if (char === ' ') circle.style.border = 'none';
+            document.getElementById('letter-hint-container').appendChild(circle);
+            revealedLettersCount++;
+        }
+    }
+
+    async function showAnswer() {
+        const q = currentQuestions[qIndex];
+        document.getElementById('final-answer').innerText = q.ans;
+        document.getElementById('answer-box').classList.remove('hidden');
+        document.getElementById('loading-spinner').style.display = 'flex';
+        
+        try {
+            const imgUrl = await fetchImagen(q.query, q.category);
+            const imgEl = document.getElementById('answer-img');
+            imgEl.src = imgUrl;
+            imgEl.onload = () => document.getElementById('loading-spinner').style.display = 'none';
+        } catch (error) {
+            handleImageError();
+        }
+        revealHint(1); revealHint(2); revealHint(3);
+    }
+
+    async function fetchImagen(query, category) {
+        const url = `https://generativelanguage.googleapis.com/v1beta/models/imagen-4.0-generate-001:predict?key=${apiKey}`;
+        const enhancedPrompt = `High quality, clear, bright photo of ${query}. Subject is a ${category}. Center focus, realistic, educational, no text.`;
+        
+        const response = await fetchWithRetry(url, {
+            method: "POST",
+            body: JSON.stringify({
+                instances: { prompt: enhancedPrompt },
+                parameters: { sampleCount: 1 }
+            })
+        });
+
+        const data = await response.json();
+        if (data.predictions && data.predictions[0].bytesBase64Encoded) {
+            return `data:image/png;base64,${data.predictions[0].bytesBase64Encoded}`;
+        }
+        throw new Error("Gen failed");
+    }
+
+    async function fetchWithRetry(url, options, retries = 5) {
+        let delay = 1000;
+        for (let i = 0; i < retries; i++) {
+            try {
+                const response = await fetch(url, options);
+                if (response.ok) return response;
+            } catch (e) {}
+            await new Promise(r => setTimeout(r, delay));
+            delay *= 2;
+        }
+        throw new Error("Final fail");
+    }
+
+    function handleImageError() {
+        if (!currentQuestions[qIndex]) return;
+        const q = currentQuestions[qIndex];
+        const fallback = `https://loremflickr.com/800/600/${encodeURIComponent(q.ans.toLowerCase())}?lock=${qIndex}`;
+        document.getElementById('answer-img').src = fallback;
+        document.getElementById('loading-spinner').style.display = 'none';
+    }
+
+    function nextQuestion() {
+        qIndex = (qIndex + 1) % currentQuestions.length;
+        loadQuestion();
+    }
+
+    function updateScore(team, val) {
+        teamScores[team] += val;
+        document.getElementById(`score${team}`).innerText = teamScores[team];
+    }
+
+    function goHome() {
+        isQuizActive = false;
+        document.getElementById('grade-picker').classList.remove('hidden');
+        document.getElementById('quiz-ui').classList.add('hidden');
+    }
+
+    window.addEventListener('keydown', (e) => {
+        const key = e.key.toLowerCase();
+        if (isQuizActive) {
+            if (key === '1') revealHint(1);
+            if (key === '2') revealHint(2);
+            if (key === '3') revealHint(3);
+            if (key === 'l') revealLetter();
+            if (key === ' ' || key === 'a') { e.preventDefault(); showAnswer(); }
+            if (key === 'n') nextQuestion();
+        }
+        if (key === 'h') goHome();
+    });
+
+    lucide.createIcons();
+</script>
+</body>
+</html>
+
+    let currentGrade = null;
+    let currentQuestions = [];
+    let qIndex = 0;
+    let revealedLettersCount = 0;
+    let teamScores = { A: 0, B: 0 };
+    let isQuizActive = false;
+
+    function centerElement(id) {
+        const el = document.getElementById(id);
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    function setGrade(grade) {
+        currentGrade = grade;
+        currentQuestions = [...quizData[grade]].sort(() => Math.random() - 0.5);
+        qIndex = 0;
+        isQuizActive = true;
+        
+        document.getElementById('grade-picker').classList.add('hidden');
+        document.getElementById('quiz-ui').classList.remove('hidden');
+        
+        const label = document.getElementById('grade-label');
+        label.innerText = grade === 'JHS1' ? 'GRADE 1' : grade === 'JHS2' ? 'GRADE 2' : 'GRADE 3';
+        label.className = `px-8 py-3 rounded-2xl text-white font-black text-xl shadow-inner gradient-${grade.toLowerCase()}`;
+        
+        loadQuestion();
+    }
+
+    function loadQuestion() {
+        const q = currentQuestions[qIndex];
+        document.getElementById('t1').innerHTML = q.h1;
+        document.getElementById('t2').innerHTML = q.h2;
+        document.getElementById('t3').innerHTML = q.h3;
+        
+        document.querySelectorAll('.hint-card').forEach(c => c.classList.remove('visible'));
+        document.getElementById('letter-hint-container').innerHTML = '';
+        document.getElementById('answer-box').classList.add('hidden');
+        
+        const imgEl = document.getElementById('answer-img');
+        imgEl.removeAttribute('src'); // Stop any current loading
+        
+        revealedLettersCount = 0;
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function revealHint(n) {
+        if (!isQuizActive) return;
+        const hint = document.getElementById(`hint-${n}`);
+        hint.classList.add('visible');
+        centerElement(`hint-${n}`);
+    }
+
+    function revealLetter() {
+        if (!isQuizActive) return;
+        const answer = currentQuestions[qIndex].ans;
+        if (revealedLettersCount < answer.length) {
+            const char = answer[revealedLettersCount];
+            const circle = document.createElement('div');
+            circle.className = 'letter-circle';
+            circle.innerText = char === ' ' ? '' : char.toUpperCase();
+            if (char === ' ') circle.style.border = 'none';
+            document.getElementById('letter-hint-container').appendChild(circle);
+            revealedLettersCount++;
+            centerElement('letter-hint-container');
+        }
+    }
+
+    async function showAnswer() {
+        if (!isQuizActive) return;
+        const q = currentQuestions[qIndex];
+        document.getElementById('final-answer').innerText = q.ans;
+        
+        const box = document.getElementById('answer-box');
+        box.classList.remove('hidden');
+        document.getElementById('loading-spinner').style.display = 'flex';
+        
+        document.querySelectorAll('.hint-card').forEach(c => c.classList.add('visible'));
+        
+        try {
+            const imgUrl = await fetchImagen(q.query || q.ans);
+            const imgEl = document.getElementById('answer-img');
+            imgEl.src = imgUrl;
+            imgEl.onload = () => {
+                document.getElementById('loading-spinner').style.display = 'none';
+            };
+        } catch (error) {
+            handleImageError();
+        }
+
+        setTimeout(() => centerElement('answer-box'), 150);
+    }
+
+    async function fetchImagen(prompt) {
+        const url = `https://generativelanguage.googleapis.com/v1beta/models/imagen-4.0-generate-001:predict?key=${apiKey}`;
+        const cleanPrompt = `High definition educational photo of ${prompt}. Clear subject, bright lighting, center composition, no text.`;
+        
+        const response = await fetchWithRetry(url, {
+            method: "POST",
+            body: JSON.stringify({
+                instances: { prompt: cleanPrompt },
+                parameters: { sampleCount: 1 }
+            })
+        });
+
+        const data = await response.json();
+        if (data.predictions && data.predictions[0].bytesBase64Encoded) {
+            return `data:image/png;base64,${data.predictions[0].bytesBase64Encoded}`;
+        }
+        throw new Error("Gen failed");
+    }
+
+    async function fetchWithRetry(url, options, retries = 5) {
+        let delay = 1000;
+        for (let i = 0; i < retries; i++) {
+            try {
+                const response = await fetch(url, options);
+                if (response.ok) return response;
+            } catch (e) {}
+            await new Promise(r => setTimeout(r, delay));
+            delay *= 2;
+        }
+        throw new Error("Final fail");
+    }
+
+    function handleImageError() {
+        // Safety check to ensure we have a question loaded
+        if (!currentQuestions || !currentQuestions[qIndex]) {
+            document.getElementById('loading-spinner').style.display = 'none';
+            return;
+        }
+        
+        const q = currentQuestions[qIndex];
+        const fallback = `https://loremflickr.com/800/600/${encodeURIComponent(q.ans.toLowerCase())}?lock=${qIndex}`;
+        
+        const imgEl = document.getElementById('answer-img');
+        if (imgEl.src !== fallback) {
+            imgEl.src = fallback;
+        }
+        document.getElementById('loading-spinner').style.display = 'none';
+    }
+
+    function nextQuestion() {
+        if (!isQuizActive) return;
+        qIndex = (qIndex + 1) % currentQuestions.length;
+        loadQuestion();
+    }
+
+    function updateScore(team, val) {
+        teamScores[team] += val;
+        const el = document.getElementById(`score${team}`);
+        el.innerText = teamScores[team];
+        el.classList.add('score-pop');
+        setTimeout(() => el.classList.remove('score-pop'), 500);
+        centerElement('score-area');
+    }
+
+    function goHome() {
+        isQuizActive = false;
+        document.getElementById('grade-picker').classList.remove('hidden');
+        document.getElementById('quiz-ui').classList.add('hidden');
+        document.getElementById('grade-label').innerText = 'WELCOME';
+        document.getElementById('grade-label').className = 'px-8 py-3 rounded-2xl text-white font-black text-xl bg-slate-400 shadow-inner';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    window.addEventListener('keydown', (e) => {
+        const key = e.key.toLowerCase();
+        if (isQuizActive) {
+            if (key === '1') revealHint(1);
+            if (key === '2') revealHint(2);
+            if (key === '3') revealHint(3);
+            if (key === 'l') revealLetter();
+            if (key === ' ' || key === 'a') {
+                e.preventDefault(); 
+                showAnswer();
+            }
+            if (key === 'n') nextQuestion();
+        } else {
+            if (key === '1') setGrade('JHS1');
+            if (key === '2') setGrade('JHS2');
+            if (key === '3') setGrade('JHS3');
+        }
+        if (key === 'h') goHome();
+    });
+
+    lucide.createIcons();
+</script>
+
+</body>
+</html>
