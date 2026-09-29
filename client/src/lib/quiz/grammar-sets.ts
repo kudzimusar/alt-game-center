@@ -1,0 +1,452 @@
+export interface GrammarQuestion {
+  g1: string;
+  g2: string;
+  g3: string;
+  h1: string;
+  h2: string;
+  h3: string;
+  ans: string;
+  query: string;
+}
+
+function u(t: string): string {
+  return `<span class="gu">${t}</span>`;
+}
+
+/* ── GRADE 1 — Be verbs · Can · Simple Present (20 sets) ── */
+const G1: GrammarQuestion[] = [
+  {
+    g1: "He has (Have)", g2: "He wears (Simple present)", g3: "He uses (Simple present)",
+    h1: `He ${u("has")} spiky green hair and wears a green jacket.`,
+    h2: `He ${u("wears")} a green jacket and shorts.`,
+    h3: `He ${u("uses")} a fishing rod to catch things.`,
+    ans: "Gon Freecss", query: "gon freecss",
+  },
+  {
+    g1: "It is (Be verb)", g2: "It can (Can)", g3: "It lives (Simple present)",
+    h1: `It ${u("is")} a small, round, and pink creature.`,
+    h2: `It ${u("can")} swallow enemies and copy their powers.`,
+    h3: `It ${u("lives")} in a peaceful place called Dream Land.`,
+    ans: "Kirby", query: "kirby",
+  },
+  {
+    g1: "It is (Be verb)", g2: "It can (Can)", g3: "It is (Be verb)",
+    h1: `It ${u("is")} a small, round, light-blue slime.`,
+    h2: `It ${u("can")} eat anything and change into a human shape.`,
+    h3: `It ${u("is")} best friends with a big dragon named Veldora.`,
+    ans: "Rimuru Tempest", query: "rimuru",
+  },
+  {
+    g1: "It is (Be verb)", g2: "It cries (Simple present)", g3: "It uses (Simple present)",
+    h1: `It ${u("is")} a very small, white, and cute animal.`,
+    h2: `It ${u("cries")} a lot when it is scared, but it tries its best.`,
+    h3: `It ${u("uses")} a small blue stick weapon to fight monsters.`,
+    ans: "Chiikawa", query: "chiikawa",
+  },
+  {
+    g1: "It is (Be verb)", g2: "It shouts (Simple present)", g3: "It loves (Simple present)",
+    h1: `It ${u("is")} a small, yellow rabbit with long ears.`,
+    h2: `It ${u("shouts")} 'Yaha!' or 'Ura!' instead of speaking.`,
+    h3: `It ${u("loves")} to eat delicious food and is very smart.`,
+    ans: "Usagi (Chiikawa)", query: "chiikawa usagi",
+  },
+  {
+    g1: "It is (Be verb)", g2: "It can (Can)", g3: "It lives (Simple present)",
+    h1: `It ${u("is")} a cute cat with a blue and white head.`,
+    h2: `It ${u("can")} speak human language very well and plays the guitar.`,
+    h3: `It ${u("lives")} in a small, poor cave but has a kind heart.`,
+    ans: "Hachiware", query: "hachiware",
+  },
+  {
+    g1: "It is (Be verb)", g2: "It has (Simple present)", g3: "You can buy (Can)",
+    h1: `It ${u("is")} a very thick and heavy manga magazine for boys.`,
+    h2: `It ${u("has")} funny comedy manga and information about new toys.`,
+    h3: `You ${u("can buy")} a new volume every month at the bookstore.`,
+    ans: "Corocoro Comic", query: "corocoro comic",
+  },
+  {
+    g1: "It is (Be verb)", g2: "You put (Simple present)", g3: "You can find (Can)",
+    h1: `It ${u("is")} a colorful machine with round plastic balls inside.`,
+    h2: `You ${u("put")} a 100-yen coin in, turn the handle, and get a toy.`,
+    h3: `You ${u("can find")} hundreds of these machines in Akihabara.`,
+    ans: "Gashapon", query: "gashapon",
+  },
+  {
+    g1: "He is (Be verb)", g2: "He can (Can)", g3: "His tail (Possessive)",
+    h1: `He ${u("is")} a small, white puppy with long ears.`,
+    h2: `He ${u("can")} fly in the sky by flapping his big ears.`,
+    h3: `His tail ${u("is")} curled up just like a cinnamon roll.`,
+    ans: "Cinnamoroll", query: "cinnamoroll",
+  },
+  {
+    g1: "He is (Be verb)", g2: "He loves (Simple present)", g3: "His favorite (Possessive)",
+    h1: `He ${u("is")} a cute white dog with black, floppy ears.`,
+    h2: `He ${u("loves")} sports, especially basketball and soccer.`,
+    h3: `His favorite food ${u("is")} banana ice cream.`,
+    ans: "Pochacco", query: "pochacco",
+  },
+  {
+    g1: "She wears (Simple present)", g2: "She has (Have)", g3: "She is (Be verb)",
+    h1: `She ${u("wears")} a black punk hood with a pink skull on it.`,
+    h2: `She ${u("has")} a devil's tail instead of a normal rabbit tail.`,
+    h3: `She ${u("is")} the rival of a cute white rabbit named My Melody.`,
+    ans: "Kuromi", query: "kuromi",
+  },
+  {
+    g1: "He is (Be verb)", g2: "He punches (Simple present)", g3: "He walks (Simple present)",
+    h1: `He ${u("is")} a very muscular man with seven scars on his chest.`,
+    h2: `He ${u("punches")} very fast and says, 'You are already dead.'`,
+    h3: `He ${u("walks")} through a dangerous desert world after a big war.`,
+    ans: "Kenshiro", query: "kenshiro",
+  },
+  {
+    g1: "He is (Be verb)", g2: "He wears (Simple present)", g3: "He can (Can)",
+    h1: `He ${u("is")} a hero with a completely bald head.`,
+    h2: `He ${u("wears")} a bright yellow suit with a white cape.`,
+    h3: `He ${u("can")} defeat any giant monster with just one punch.`,
+    ans: "Saitama", query: "saitama",
+  },
+  {
+    g1: "He is (Be verb)", g2: "He loves (Simple present)", g3: "He has (Have)",
+    h1: `He ${u("is")} a funny 5-year-old boy with thick eyebrows.`,
+    h2: `He ${u("loves")} beautiful ladies and hates eating green peppers.`,
+    h3: `He ${u("has")} a fluffy white dog named Shiro.`,
+    ans: "Shinnosuke Nohara", query: "shinchan",
+  },
+  {
+    g1: "He is (Be verb)", g2: "He loves (Simple present)", g3: "He helps (Simple present)",
+    h1: `He ${u("is")} a blue robot cat from the 22nd century.`,
+    h2: `He ${u("loves")} sweet bean pancakes but is terrified of mice.`,
+    h3: `He ${u("helps")} a weak boy named Nobita with futuristic gadgets.`,
+    ans: "Doraemon", query: "doraemon",
+  },
+  {
+    g1: "This is (Be verb)", g2: "It is covered (Passive)", g3: "Fans are called (Passive)",
+    h1: `This ${u("is")} a famous ramen shop known for giant portions.`,
+    h2: `The bowl ${u("is covered")} with tons of pork, cabbage, and garlic.`,
+    h3: `Fans of this greasy ramen ${u("are called")} 'Jirorians'.`,
+    ans: "Ramen Jiro", query: "ramen jiro",
+  },
+  {
+    g1: "It is (Be verb)", g2: "It connects (Simple present)", g3: "It is (Be verb)",
+    h1: `It ${u("is")} a super-fast train with a long, pointed nose.`,
+    h2: `It ${u("connects")} Tokyo to cities like Osaka, Kyoto, and Hakata.`,
+    h3: `It ${u("is")} famous because it is never late.`,
+    ans: "Shinkansen", query: "shinkansen",
+  },
+  {
+    g1: "It is (Be verb)", g2: "It lights up (Simple present)", g3: "You can see (Can)",
+    h1: `It ${u("is")} the tallest tower in Japan.`,
+    h2: `It ${u("lights up")} with beautiful blue and purple colors at night.`,
+    h3: `You ${u("can see")} Mt. Fuji from its high observation deck.`,
+    ans: "Tokyo Skytree", query: "tokyo skytree",
+  },
+  {
+    g1: "This is (Be verb)", g2: "It has (Have)", g3: "You must catch (Must)",
+    h1: `This ${u("is")} a traditional Japanese toy made of wood.`,
+    h2: `It ${u("has")} a handle with three cups and a red ball on a string.`,
+    h3: `You ${u("must catch")} the ball in the cups or on the sharp spike.`,
+    ans: "Kendama", query: "kendama",
+  },
+  {
+    g1: "This is (Be verb)", g2: "One person reads (Simple present)", g3: "It is (Be verb)",
+    h1: `This ${u("is")} a traditional Japanese card game played on tatami mats.`,
+    h2: `One person ${u("reads")} a poem, and players quickly slap the matching card.`,
+    h3: `It ${u("is")} a very popular game to play during New Year's holidays.`,
+    ans: "Karuta", query: "karuta",
+  },
+];
+
+/* ── GRADE 2 — Past Simple · Infinitive · Passive (20 sets) ── */
+const G2: GrammarQuestion[] = [
+  {
+    g1: "He was (Past tense)", g2: "He started to play (Infinitive)", g3: "He wore (Past tense)",
+    h1: `He ${u("was")} a high school delinquent with bright red hair.`,
+    h2: `He started ${u("to play")} basketball to impress a girl.`,
+    h3: `He ${u("wore")} a red and white jersey for Shohoku High School.`,
+    ans: "Hanamichi Sakuragi", query: "sakuragi",
+  },
+  {
+    g1: "He was (Past tense)", g2: "He was (Past tense)", g3: "He said (Past tense)",
+    h1: `He ${u("was")} a legendary Japanese swimmer who won four Olympic gold medals.`,
+    h2: `He ${u("was")} the fastest breaststroke swimmer in the world.`,
+    h3: `After winning in 2004, he ${u("said")} 'Cho-kimochi-ii' (I feel great).`,
+    ans: "Kousuke Kitajima", query: "kitajima",
+  },
+  {
+    g1: "He was (Past tense)", g2: "He went (Past tense)", g3: "You can see (Can)",
+    h1: `He ${u("was")} a loyal Akita dog who lived in Tokyo 100 years ago.`,
+    h2: `He ${u("went")} to Shibuya Station every day to wait for his master.`,
+    h3: `You ${u("can see")} his bronze statue outside Shibuya Station today.`,
+    ans: "Hachiko", query: "hachiko",
+  },
+  {
+    g1: "He was (Past tense)", g2: "He became (Past tense)", g3: "He was born (Past tense)",
+    h1: `He ${u("was")} a famous samurai who worked to change Japan.`,
+    h2: `He ${u("became")} famous for wearing robes while holding a foreign gun.`,
+    h3: `He ${u("was born")} in Tosa (Kochi) and loved the ocean.`,
+    ans: "Ryoma Sakamoto", query: "ryoma sakamoto",
+  },
+  {
+    g1: "He was (Past tense)", g2: "His statue stands (Simple present)", g3: "He is shown (Passive)",
+    h1: `He ${u("was")} a powerful samurai leader from Satsuma with a large body.`,
+    h2: `His famous statue ${u("stands")} in Ueno Park, Tokyo.`,
+    h3: `He ${u("is shown")} walking with his favorite hunting dog.`,
+    ans: "Saigo Takamori", query: "saigo takamori",
+  },
+  {
+    g1: "This is (Be verb)", g2: "It started (Past tense)", g3: "You lose (Simple present)",
+    h1: `This ${u("is")} Japan's national sport, which started more than 1,500 years ago.`,
+    h2: `Two heavy athletes ${u("fight")} inside a sandy ring called a dohyo.`,
+    h3: `You ${u("lose")} if any part of your body touches the ground outside the circle.`,
+    ans: "Sumo Wrestling", query: "sumo",
+  },
+  {
+    g1: "This is (Be verb)", g2: "It is (Be verb)", g3: "It became (Past tense)",
+    h1: `This ${u("is")} the highest and most beautiful mountain in Japan.`,
+    h2: `It ${u("is")} famous for its perfect cone shape covered in white snow.`,
+    h3: `It ${u("became")} a UNESCO World Cultural Heritage site.`,
+    ans: "Mount Fuji", query: "mount fuji",
+  },
+  {
+    g1: "This city was (Past tense)", g2: "Tourists love to visit (Infinitive)", g3: "You can see (Can)",
+    h1: `This city ${u("was")} the old capital of Japan for over 1,000 years.`,
+    h2: `Tourists love ${u("to visit")} to see golden temples and old wooden houses.`,
+    h3: `You ${u("can see")} people wearing beautiful kimono on its historic streets.`,
+    ans: "Kyoto", query: "kyoto",
+  },
+  {
+    g1: "This is (Be verb)", g2: "It is (Be verb)", g3: "Deer live (Simple present)",
+    h1: `This ${u("is")} a famous island in Hiroshima Prefecture.`,
+    h2: `It ${u("is")} famous for a giant red gate that stands inside the ocean.`,
+    h3: `Many wild deer ${u("live")} on the island and walk next to tourists.`,
+    ans: "Miyajima", query: "miyajima",
+  },
+  {
+    g1: "This is (Be verb)", g2: "It is made (Passive)", g3: "It was invented (Past tense)",
+    h1: `This ${u("is")} a popular street food shaped like small, round balls.`,
+    h2: `It ${u("is made")} of batter filled with small pieces of octopus and ginger.`,
+    h3: `It ${u("was invented")} in Osaka, and people eat it with sweet sauce.`,
+    ans: "Takoyaki", query: "takoyaki",
+  },
+  {
+    g1: "This is (Be verb)", g2: "Mothers spend (Simple present)", g3: "Students love to eat (Infinitive)",
+    h1: `This ${u("is")} a Japanese lunch box with rice, meat, and vegetables.`,
+    h2: `Mothers often ${u("spend")} time making them look like anime characters.`,
+    h3: `Students love ${u("to eat")} them on school trips or sports days.`,
+    ans: "Bento", query: "bento",
+  },
+  {
+    g1: "This is (Be verb)", g2: "JHS students love to wear (Infinitive)", g3: "They come (Simple present)",
+    h1: `This ${u("is")} a light, casual cotton robe worn during summer.`,
+    h2: `JHS students love ${u("to wear")} them to see summer fireworks.`,
+    h3: `They ${u("come")} in colorful designs with flowers or waves.`,
+    ans: "Yukata", query: "yukata",
+  },
+  {
+    g1: "This is (Be verb)", g2: "It has (Simple present)", g3: "Families love to sit (Infinitive)",
+    h1: `This ${u("is")} a low wooden table covered by a heavy, warm blanket.`,
+    h2: `It ${u("has")} an electric heater underneath to keep your feet warm.`,
+    h3: `Families love ${u("to sit")} around it to watch TV and eat mandarin oranges.`,
+    ans: "Kotatsu", query: "kotatsu",
+  },
+  {
+    g1: "This is (Be verb)", g2: "People write (Simple present)", g3: "Wishes are hung (Passive)",
+    h1: `This ${u("is")} a summer festival celebrated on July 7th.`,
+    h2: `People ${u("write")} their future wishes on colorful strips of paper.`,
+    h3: `These paper wishes ${u("are hung")} on tall green bamboo branches.`,
+    ans: "Tanabata", query: "tanabata",
+  },
+  {
+    g1: "This is (Be verb)", g2: "Kids gather (Simple present)", g3: "They get (Simple present)",
+    h1: `This ${u("is")} an exercise routine that started on Japanese radio in 1928.`,
+    h2: `Kids ${u("gather")} early in the morning during summer vacation to do it.`,
+    h3: `After stretching, they ${u("get")} a stamp on their attendance cards.`,
+    ans: "Radio Taiso", query: "radio taiso",
+  },
+  {
+    g1: "This is (Be verb)", g2: "Traditionally (Adverb)", g3: "Children use (Simple present)",
+    h1: `This ${u("is")} a very strong, firm backpack for elementary school students.`,
+    h2: `Traditionally, boys ${u("carried")} black ones, and girls carried red.`,
+    h3: `Children ${u("use")} the same bag for all six years of elementary school.`,
+    ans: "Randoseru", query: "randoseru",
+  },
+  {
+    g1: "This is (Be verb)", g2: "It became (Past tense)", g3: "Friends love to write (Infinitive)",
+    h1: `This ${u("is")} a special photo booth that became a hit in the 1990s.`,
+    h2: `The machine ${u("makes")} your eyes look bigger and skin smoother.`,
+    h3: `Friends love ${u("to write")} funny messages on the screen before printing stickers.`,
+    ans: "Purikura", query: "purikura",
+  },
+  {
+    g1: "This is (Be verb)", g2: "You are not allowed (Passive)", g3: "It has (Simple present)",
+    h1: `This ${u("is")} a whimsical museum in Mitaka, Tokyo.`,
+    h2: `You ${u("are not allowed")} to take photos inside.`,
+    h3: `It ${u("has")} a giant rooftop robot from the movie Laputa.`,
+    ans: "Ghibli Museum", query: "ghibli museum",
+  },
+  {
+    g1: "This is (Be verb)", g2: "It was built (Past tense)", g3: "It features (Simple present)",
+    h1: `This ${u("is")} Tokyo's oldest Buddhist temple, built in the year 645.`,
+    h2: `It ${u("was built")} in Asakusa and has a massive red gate called Kaminarimon.`,
+    h3: `It ${u("features")} a giant, heavy paper lantern hanging in the entrance.`,
+    ans: "Senso-ji", query: "sensoji",
+  },
+  {
+    g1: "This is (Be verb)", g2: "You must wash (Must)", g3: "Monkeys sit (Simple present)",
+    h1: `This ${u("is")} a traditional Japanese hot spring bath with mineral water.`,
+    h2: `You ${u("must wash")} your body completely before entering the pool.`,
+    h3: `In some mountain hot springs, wild monkeys ${u("sit")} in the warm water too.`,
+    ans: "Onsen", query: "onsen",
+  },
+];
+
+/* ── GRADE 3 — Relative Clauses · Passive · Present Perfect (20 sets) ── */
+const G3: GrammarQuestion[] = [
+  {
+    g1: "He is a wrestler who (Relative)", g2: "He was born (Passive)", g3: "He is a hero who (Relative)",
+    h1: `He ${u("is a powerful sumo wrestler who")} achieved the highest rank of Yokozuna.`,
+    h2: `He ${u("was born")} in Mongolia but became a Japanese citizen.`,
+    h3: `He ${u("is a hero who")} overcame severe knee injuries to win multiple championships.`,
+    ans: "Terunofuji", query: "terunofuji",
+  },
+  {
+    g1: "He is a legend who (Relative)", g2: "He was famous (Past tense)", g3: "He has been awarded (Present perfect passive)",
+    h1: `He ${u("is a baseball legend who")} hit 868 home runs, a world record.`,
+    h2: `He ${u("was famous")} for his 'flamingo' batting style on one leg.`,
+    h3: `He ${u("has been awarded")} the People's Honor Award.`,
+    ans: "Sadaharu Oh", query: "sadaharu oh",
+  },
+  {
+    g1: "He is a delinquent who (Relative)", g2: "A spirit blast is shot (Passive)", g3: "He was played (Passive)",
+    h1: `He ${u("is a 14-year-old delinquent who")} was brought back to life to fight evil spirits.`,
+    h2: `A powerful spirit blast called the 'Spirit Gun' ${u("is shot")} from his finger.`,
+    h3: `He ${u("was recently played")} by Takumi Kitamura in a Netflix show.`,
+    ans: "Yusuke Urameshi", query: "yusuke urameshi",
+  },
+  {
+    g1: "He is a boy who (Relative)", g2: "An artifact is worn (Passive)", g3: "He is the main character (Be verb)",
+    h1: `He ${u("is a short high-school boy who")} has wild, spiky black, purple, and gold hair.`,
+    h2: `A golden Egyptian artifact called the 'Millennium Puzzle' ${u("is worn")} around his neck.`,
+    h3: `He ${u("is")} the main character of the world's top-selling trading card game.`,
+    ans: "Yugi Mutou", query: "yugi mutou",
+  },
+  {
+    g1: "He is a samurai who (Relative)", g2: "A special sword is used (Passive)", g3: "His story has been remade (Present perfect passive)",
+    h1: `He ${u("is a gentle samurai who")} has a scar shaped like an 'X' on his left cheek.`,
+    h2: `A special sword with a reversed blade ${u("is used")} by him so he does not kill.`,
+    h3: `His legendary story ${u("has been remade")} into a brand-new TV anime series.`,
+    ans: "Kenshin Himura", query: "kenshin himura",
+  },
+  {
+    g1: "She is a princess who (Relative)", g2: "Electricity is shot (Passive)", g3: "She is a character who (Relative)",
+    h1: `She ${u("is a beautiful alien princess who")} wears a tiger-striped bikini and has small horns.`,
+    h2: `High-voltage electricity ${u("is shot")} from her body, and she ends sentences with '~datteya.'`,
+    h3: `She ${u("is an iconic character")} created by Rumiko Takahashi that returned in a new anime.`,
+    ans: "Lum", query: "lum urusei yatsura",
+  },
+  {
+    g1: "He is a director who (Relative)", g2: "Masterpieces were directed (Passive)", g3: "He collaborates (Simple present)",
+    h1: `He ${u("is a world-famous animation director who")} draws breathtaking skies and rain.`,
+    h2: `Global masterpieces like Your Name. and Suzume ${u("were directed")} by him.`,
+    h3: `He always ${u("collaborates")} with the Japanese rock band RADWIMPS.`,
+    ans: "Shinkai Makoto", query: "makoto shinkai",
+  },
+  {
+    g1: "He is a creator who (Relative)", g2: "Legendary characters were created (Passive)", g3: "The modern style was started (Passive)",
+    h1: `He ${u("is a historical creator who")} is called 'The God of Manga' in Japan.`,
+    h2: `Legendary characters like Astro Boy and Black Jack ${u("were created")} by his hand.`,
+    h3: `The modern style of Japanese animation ${u("was started")} by him.`,
+    ans: "Osamu Tezuka", query: "osamu tezuka",
+  },
+  {
+    g1: "He was a duo whose (Relative)", g2: "He created (Past tense)", g3: "A museum was built (Passive)",
+    h1: `He ${u("was a legendary manga artist duo whose")} real name was Hiroshi Fujimoto.`,
+    h2: `He ${u("created")} the blue robotic cat loved by millions since 1969.`,
+    h3: `A beautiful museum ${u("was built")} in Kawasaki City dedicated to his artwork.`,
+    ans: "Fujiko F. Fujio", query: "fujiko fujio",
+  },
+  {
+    g1: "He is a director who (Relative)", g2: "His latest film was released (Passive)", g3: "Movies that focus (Relative)",
+    h1: `He ${u("is a legendary director who")} co-founded Studio Ghibli and won two Academy Awards.`,
+    h2: `His latest film, The Boy and the Heron, ${u("was released")} and won a global award in 2024.`,
+    h3: `Movies that focus on environmental issues and peace ${u("are made")} by him.`,
+    ans: "Hayao Miyazaki", query: "hayao miyazaki",
+  },
+  {
+    g1: "This is a selection of foods that (Relative)", g2: "Items are packed (Passive)", g3: "Every ingredient has (Simple present)",
+    h1: `This ${u("is a special selection of traditional foods that")} are eaten during the New Year.`,
+    h2: `The colorful food items ${u("are packed")} inside a tiered wooden box called a jubako.`,
+    h3: `Every ingredient that is included ${u("has")} a special meaning for health or wealth.`,
+    ans: "Osechi Ryori", query: "osechi",
+  },
+  {
+    g1: "This is an art where (Relative)", g2: "Scissors are rarely used (Passive)", g3: "A crane is made (Passive)",
+    h1: `This ${u("is a traditional Japanese art where")} a single square paper is folded into shapes.`,
+    h2: `Scissors and glue ${u("are rarely used")} because the shape must be made only by folding.`,
+    h3: `A paper crane ${u("is often made")} as a symbol of peace.`,
+    ans: "Origami", query: "origami",
+  },
+  {
+    g1: "This is a dress that (Relative)", g2: "A sash is wrapped (Passive)", g3: "It has been worn (Present perfect passive)",
+    h1: `This ${u("is a traditional national dress that")} has wide sleeves and a T-shaped frame.`,
+    h2: `A long, decorative sash called an obi ${u("is wrapped")} around the waist.`,
+    h3: `It ${u("has been worn")} for centuries during Coming of Age Day and weddings.`,
+    ans: "Kimono", query: "kimono",
+  },
+  {
+    g1: "This is a mat that (Relative)", g2: "It is made of (Passive)", g3: "Shoes must be taken off (Passive)",
+    h1: `This ${u("is a traditional flooring mat that")} has been used in Japanese houses for centuries.`,
+    h2: `It ${u("is made")} of woven rush grass, which gives a fresh scent.`,
+    h3: `Shoes must always ${u("be taken off")} before walking on these soft mats.`,
+    ans: "Tatami", query: "tatami",
+  },
+  {
+    g1: "This is a place where (Relative)", g2: "The entrance is marked (Passive)", g3: "Visitors wash (Simple present)",
+    h1: `This ${u("is a sacred place of worship where")} nature spirits called kami are believed to live.`,
+    h2: `The entrance ${u("is marked")} by a wooden or stone gate called a torii.`,
+    h3: `Visitors ${u("wash")} their hands, clap twice, and bow to show respect.`,
+    ans: "Shinto Shrine", query: "shinto shrine",
+  },
+  {
+    g1: "This is a drink that (Relative)", g2: "It is prepared (Passive)", g3: "It has become (Present perfect)",
+    h1: `This ${u("is a traditional powdered green tea that")} has been drank in Japan for over 800 years.`,
+    h2: `It ${u("is prepared")} during a formal ritual called the Japanese Tea Ceremony.`,
+    h3: `It ${u("has become")} a global flavor used in ice cream, lattes, and chocolate.`,
+    ans: "Matcha", query: "matcha",
+  },
+  {
+    g1: "This is a theater form that (Relative)", g2: "All roles are performed (Passive)", g3: "Actors wear (Simple present)",
+    h1: `This ${u("is a classical Japanese theater form that")} has been performed since the Edo period.`,
+    h2: `All roles, including female characters, ${u("are performed")} by male actors.`,
+    h3: `Actors ${u("wear")} elaborate costumes and dramatic face makeup called kumadori.`,
+    ans: "Kabuki", query: "kabuki",
+  },
+  {
+    g1: "This is a print style that (Relative)", g2: "Scenes were captured (Passive)", g3: "A famous piece was created (Passive)",
+    h1: `This ${u("is a style of woodblock prints that")} became famous around the world.`,
+    h2: `Scenes of daily life and landscapes ${u("were captured")} by artists.`,
+    h3: `'The Great Wave off Kanagawa,' created by Hokusai, ${u("is")} the most famous example.`,
+    ans: "Ukiyo-e", query: "ukiyoe",
+  },
+  {
+    g1: "This is a temple that (Relative)", g2: "The top floors are covered (Passive)", g3: "It overlooks (Simple present)",
+    h1: `This ${u("is a famous Zen Buddhist temple located in Kyoto that")} attracts millions of visitors.`,
+    h2: `The top two floors of the pavilion ${u("are completely covered")} in pure gold leaf.`,
+    h3: `It ${u("overlooks")} a peaceful pond that reflects the golden structure perfectly.`,
+    ans: "Kinkaku-ji", query: "kinkakuji",
+  },
+  {
+    g1: "This is a shrine that (Relative)", g2: "The complex is constructed (Passive)", g3: "It is famous (Be verb)",
+    h1: `This ${u("is an ancient shrine built on the water that")} has been designated as a World Heritage site.`,
+    h2: `The entire building complex ${u("is constructed")} on stilts over the sea, so it appears to float.`,
+    h3: `It ${u("is famous")} for its iconic view, one of the three most scenic views in Japan.`,
+    ans: "Itsukushima Shrine", query: "itsukushima",
+  },
+];
+
+export const grammarSets = {
+  JHS1: G1,
+  JHS2: G2,
+  JHS3: G3,
+};

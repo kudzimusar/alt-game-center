@@ -4,6 +4,7 @@ import {
   ArrowLeft,
   RotateCcw,
   Zap,
+  Home,
   CheckCircle,
   Loader,
   HelpCircle,
@@ -155,12 +156,11 @@ export default function WordHunt() {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 p-4">
         <div className="max-w-4xl mx-auto">
-          <Link href="/games">
-            <button className="flex items-center gap-2 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white mb-8">
-              <ArrowLeft size={20} />
-              Back to Games
-            </button>
-          </Link>
+          <div className="flex items-center gap-4 mb-8">
+            <Link href="/dashboard"><button className="flex items-center gap-2 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white font-bold transition-colors"><Home size={18}/> Dashboard</button></Link>
+            <span className="text-slate-300 dark:text-slate-600">·</span>
+            <Link href="/games"><button className="flex items-center gap-2 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white font-bold transition-colors"><ArrowLeft size={18}/> All Games</button></Link>
+          </div>
 
           <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-xl rounded-3xl border border-white/20 p-8 mb-6">
             <h1 className="text-4xl font-display font-black mb-2 text-center">

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "wouter";
-import { ArrowLeft, Zap } from "lucide-react";
+import { ArrowLeft, Zap, Home } from "lucide-react";
 import { grades, skills, games } from "@/lib/mockData";
 
 export default function GameList() {
@@ -18,12 +18,11 @@ export default function GameList() {
       {/* Header with back button */}
       <div className="sticky top-0 z-50 backdrop-blur-xl bg-white/80 dark:bg-slate-900/80 border-b border-white/20">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-          <Link href="/">
-            <button className="flex items-center gap-2 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors">
-              <ArrowLeft size={20} />
-              Back to Home
-            </button>
-          </Link>
+          <div className="flex items-center gap-4">
+            <Link href="/dashboard"><button className="flex items-center gap-2 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors font-bold"><Home size={18}/> Dashboard</button></Link>
+            <span className="text-slate-300 dark:text-slate-600">·</span>
+            <Link href="/games"><button className="flex items-center gap-2 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors font-bold"><ArrowLeft size={18}/> All Games</button></Link>
+          </div>
           <h1 className="text-2xl font-display font-black">Choose Your Game</h1>
           <div className="w-24"></div>
         </div>
@@ -93,12 +92,17 @@ export default function GameList() {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredGames.map((game) => (
-                <Link key={game.id} href={`/game/${game.id}`}>
+                <Link key={game.id} href={(game as any).route || `/game/${game.id}`}>
                   <div className="game-card-hover h-full bg-white/80 dark:bg-slate-800/80 backdrop-blur-xl rounded-2xl border border-white/20 overflow-hidden cursor-pointer group">
                     <div className="p-6 h-full flex flex-col">
                       <div className="flex items-start justify-between mb-4">
                         <div>
-                          <h3 className="text-xl font-display font-bold mb-1">{game.title}</h3>
+                          <div className="flex items-center gap-2 mb-1">
+                            <h3 className="text-xl font-display font-bold">{game.title}</h3>
+                            {(game as any).isNew && (
+                              <span className="text-xs font-black px-2 py-0.5 bg-yellow-400 text-slate-900 rounded-full">NEW</span>
+                            )}
+                          </div>
                           <p className="text-sm text-slate-600 dark:text-slate-400">
                             {game.description}
                           </p>
