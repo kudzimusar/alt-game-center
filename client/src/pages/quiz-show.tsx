@@ -24,11 +24,12 @@ export default function QuizShow() {
     setLoading(true);
     try {
       const response = await fetch(`/api/games/quiz-show/${selectedGrade}`);
-      if (response.ok) {
-        const data = await response.json();
-        setQuestions(data);
-        setGameState("playing");
+      if (!response.ok) {
+        throw new Error(`Quiz API returned ${response.status}`);
       }
+      const data = await response.json();
+      setQuestions(data);
+      setGameState("playing");
     } catch (error) {
       console.error("Failed to fetch quiz:", error);
       // Fallback
