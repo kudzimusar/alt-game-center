@@ -1,0 +1,257 @@
+PROJECT BRIEF: JHS English Teaching Games Web Application
+
+====================
+PROJECT OVERVIEW
+====================
+
+We need to develop a comprehensive web application for Japanese junior high school (JHS) English teachers that provides interactive teaching games aligned with the Japanese curriculum and major textbook series.
+
+TARGET USERS:
+- Japanese junior high school English teachers (ALTs and Japanese Teachers of English)
+- Students: Grades 1-3 (ages 12-15, corresponding to 中1, 中2, 中3)
+- Classroom environment: Large screens, tablets, individual student devices
+
+====================
+TECHNICAL FOUNDATION
+====================
+
+We have already developed the complete React codebase for this application. The code is production-ready and includes:
+- Full navigation system between home, grade selection, skill selection, and individual games
+- Responsive design optimized for classroom displays and touch devices
+- Complete UI/UX with JapaneEnglish bilingual support
+- Game library structure with metadata (difficulty, time, player count)
+
+YOUR TASK: Build out the interactive game mechanics for each of the 50+ games listed in the application.
+
+====================
+CURRICULUM ALIGNMENT
+====================
+
+The app must align with the Japanese Ministry of Education (MEXT) Course of Study for JHS English:
+
+GRADE 1 (中1) - 7th Grade:
+- Grammar: Be verbs, Simple Present, Can, Present Progressive
+- Vocabulary: Basic everyday topics (family, school, hobbies, colors, numbers)
+- Textbook alignment: New Horizon 1, Here We Go 1, Sunshine 1, New Crown 1, One World 1
+
+GRADE 2 (中2) - 8th Grade:
+- Grammar: Past Tense, Future (will/be going to), Comparative, Infinitives, Gerunds
+- Vocabulary: Intermediate topics (travel, health, environment, culture)
+- Textbook alignment: New Horizon 2, Here We Go 2, Sunshine 2, New Crown 2, One World 2
+
+GRADE 3 (中3) - 9th Grade:
+- Grammar: Present Perfect, Passive Voice, Relative Clauses, Conditionals
+- Vocabulary: Advanced topics (social issues, careers, global topics)
+- Textbook alignment: New Horizon 3, Here We Go 3, Sunshine 3, New Crown 3, One World 3
+- Focus: High school entrance exam preparation
+
+====================
+GAME DEVELOPMENT REQUIREMENTS
+====================
+
+Each game needs:
+
+1. INTERACTIVE MECHANICS:
+   - Touch-friendly controls for tablets and smartboards
+   - Automatic scoring and feedback systems
+   - Timer functionality where applicable
+   - Sound effects for correct/incorrect answers (optional, toggleable)
+   - Visual feedback (animations, color changes, checkmarks)
+
+2. CONTENT CUSTOMIZATION:
+   - Teachers must be able to input their own vocabulary lists
+   - Grammar point selection from curriculum-aligned options
+   - Difficulty level adjustment
+   - Ability to save and reuse custom content
+
+3. CLASSROOM FEATURES:
+   - Team/group management (split class into teams)
+   - Score tracking and leaderboard display
+   - Projection mode (large text for classroom displays)
+   - Student name input for personalization
+   - Pause/resume functionality
+
+4. FOUR SKILLS COVERAGE:
+   - LISTENING games: Audio playback, comprehension checks, dictation
+   - SPEAKING games: Prompt display, turn management, speaking time tracking
+   - READING games: Text display, comprehension questions, speed reading
+   - WRITING games: Text input, spelling checks, sentence construction
+
+5. TECHNICAL SPECIFICATIONS:
+   - Responsive design: 1920x1080 (classroom projector), 1366x768 (tablet), mobile
+   - No authentication required initially (public access)
+   - Local storage for saving teacher preferences and custom content
+   - Fast load times (Japanese internet speeds vary in schools)
+   - Works offline after initial load (Progressive Web App features preferred)
+   - Japanese and English UI language toggle
+
+====================
+PRIORITY GAMES TO BUILD FIRST
+====================
+
+Phase 1 - Essential Games (Build These First):
+
+1. **3 Hint Quiz** (Grade 1, Speaking)
+   - Teacher/student gives 3 hints about a word
+   - Class guesses the word
+   - Scoring system for speed and accuracy
+   - Custom vocabulary input
+
+2. **Word Search** (Grade 1, Reading)
+   - Interactive grid with vocabulary words
+   - Touch/click to highlight words
+   - Timer and scoring
+   - Printable option
+
+3. **Kahoot-Style Quiz** (Multi-Skill)
+   - Multiple choice questions
+   - 4 colored answer buttons
+   - Timer per question
+   - Team scoring and leaderboard
+   - Teacher creates question sets
+
+4. **Interview Bingo** (Grades 1-2, Speaking)
+   - Digital bingo cards with questions
+   - Students mark off when classmates answer
+   - Randomized card generation
+   - "Bingo!" detection
+
+5. **Jeopardy Review** (Grades 2-3, Speaking)
+   - Category-based question board
+   - Point values (100-500)
+   - Team selection and scoring
+   - Question reveal animations
+   - Daily Double functionality
+
+====================
+CULTURAL CONSIDERATIONS
+====================
+
+Important for Japanese JHS context:
+
+1. LANGUAGE:
+   - All instructions available in both Japanese and English
+   - Furigana (ruby text) option for difficult kanji
+   - Grammar explanations in Japanese when needed
+
+2. CLASSROOM DYNAMICS:
+   - Japanese classes typically 35-40 students
+   - Group work is common (4-6 students per group)
+   - Teacher-centered instruction with ALT support
+   - Limited English speaking time per student
+
+3. SCHOOL ENVIRONMENT:
+   - 50-minute class periods
+   - Games should fit within 15-25 minute segments
+   - Limited access to 1:1 devices (often teacher device only)
+   - Smartboard/projector is standard
+
+4. ASSESSMENT CULTURE:
+   - Games should support formative assessment
+   - Performance tracking without excessive pressure
+   - Group scores often preferred over individual competition
+   - Connection to textbook units and tests
+
+====================
+USER FLOWS
+====================
+
+TEACHER FLOW:
+1. Opens app → Selects grade level
+2. Chooses skill area (Listening/Speaking/Reading/Writing) OR Multi-Skill
+3. Selects specific game
+4. Customizes content (vocabulary, grammar, difficulty)
+5. Launches game in class
+6. Monitors student participation
+7. Views results/scores
+8. Saves game settings for reuse
+
+STUDENT FLOW (for games with student devices):
+1. Teacher provides game link/code
+2. Students enter name/team
+3. Wait for teacher to start
+4. Participate in game
+5. See their score/feedback
+6. View final results
+
+====================
+DATA & CONTENT STRUCTURE
+====================
+
+Provide default content libraries for each grade:
+
+- Grade 1: 500+ basic vocabulary words (categorized by unit/topic)
+- Grade 2: 600+ intermediate words and phrases
+- Grade 3: 700+ advanced words and exam-relevant vocabulary
+- Grammar point templates for each grade level
+- Sample sentences for context
+
+Allow teachers to:
+- Upload CSV files with custom vocabulary
+- Select from textbook-specific word lists
+- Create and save custom game sets
+- Share content with other teachers (future feature)
+
+====================
+TECHNICAL STACK RECOMMENDATIONS
+====================
+
+Frontend (Already Built):
+- React with Hooks
+- Tailwind CSS for styling
+- Lucide React for icons
+
+Backend Needs:
+- Node.js/Express or similar for API
+- Database: PostgreSQL or MongoDB for content storage
+- User authentication (Phase 2): Teacher accounts, saved games
+- File upload: CSV parsing for vocabulary lists
+
+Additional Libraries to Consider:
+- Howler.js or Web Audio API for sound effects
+- React DnD for drag-and-drop games
+- Chart.js for score visualization
+- QR code generation for easy student access
+
+====================
+DELIVERABLES
+====================
+
+Phase 1 (MVP - 6-8 weeks):
+- 5 fully functional interactive games (listed above)
+- Basic content customization interface
+- Responsive design across devices
+- Local storage for teacher preferences
+- Bilingual UI (Japanese/English)
+
+Phase 2 (Full Launch - 10-12 weeks):
+- All 50+ games fully interactive
+- Teacher accounts and cloud save
+- Comprehensive default content library
+- Advanced customization options
+- Performance analytics and reports
+
+Phase 3 (Enhancement - Ongoing):
+- Student accounts and progress tracking
+- Integration with Learning Management Systems
+- Mobile apps (iOS/Android)
+- Textbook publisher partnerships
+- Community content sharing
+
+====================
+SUCCESS METRICS
+====================
+
+- Teacher adoption: 1,000+ teachers using within first 6 months
+- Engagement: Average 3+ games played per teacher per week
+- Customization: 50%+ of teachers create custom content
+- Retention: 70%+ monthly active users after 3 months
+- Classroom impact: Measurable increase in student participation
+
+====================
+RESOURCES
+====================
+
+Design Files: [Existing React code serves as design reference]
+Stakeholders: JHS English teachers, ALTs, educational consultants
+Reference Materials: MEXT Course of Study, major JHS textbooks

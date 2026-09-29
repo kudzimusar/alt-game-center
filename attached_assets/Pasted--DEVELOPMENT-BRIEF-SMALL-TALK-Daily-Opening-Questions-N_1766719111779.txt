@@ -1,0 +1,892 @@
+# DEVELOPMENT BRIEF: “SMALL TALK” - Daily Opening Questions
+
+## New Feature for JHS English Teaching Games Application
+
+-----
+
+## 🎯 FEATURE OVERVIEW
+
+**Feature Name:** Small Talk (スモールトーク)
+
+**Category:** Daily Warm-up Activities
+
+**Purpose:** Provide teachers with ready-made daily opening questions that align with students’ current grammar level and textbook progression, solving three critical pain points:
+
+1. Teachers don’t have to create new questions every day
+1. Structured classroom activity management with built-in timing
+1. Scaffolding to help students produce full, grammatically correct sentences
+
+**Target Users:**
+
+- Japanese junior high school English teachers (ALTs and JTEs)
+- All three grade levels (中1, 中2, 中3)
+- Used daily at the start of every English class (5-10 minutes)
+
+-----
+
+## 📚 PEDAGOGICAL FOUNDATION
+
+### Core Concept
+
+“Small Talk” provides **daily conversation starters** that are:
+
+- ✅ **Grammar-aligned**: Questions only use grammar points students have learned
+- ✅ **Cumulative**: Questions recycle previous grammar while introducing current points
+- ✅ **Scaffolded**: Built-in support helps students produce complete sentences
+- ✅ **Flexible**: Teachers can adapt to their actual pacing and schedule
+- ✅ **Fun**: Mix of real and imaginative scenarios keeps students engaged
+
+### Three Sub-Games Under “Small Talk” Category
+
+#### 1️⃣ **TALK ABOUT YOU** (Grade 1 - 中1)
+
+- **Grammar Focus:** Be verbs, Can, Simple Present, Present Progressive, Have/Has
+- **Question Types:** Personal experiences, daily routines, abilities, preferences
+- **Example:** “What time do you usually wake up? Why do you wake up at that time?”
+- **Sentence Pattern:** “I usually wake up at [time] because…”
+
+#### 2️⃣ **WHAT IF?** (Grade 2 - 中2)
+
+- **Grammar Focus:** Past Simple, Future (will/going to), Real Conditionals, Comparatives, Infinitives, Gerunds, Passive Voice
+- **Question Types:** Past experiences, future plans, real-world choices, comparisons
+- **Example:** “If you have free time this weekend, what will you do? Why?”
+- **Sentence Pattern:** “If I have free time, I will… because…”
+
+#### 3️⃣ **IMAGINE** (Grade 3 - 中3)
+
+- **Grammar Focus:** Present Perfect, Second Conditional, Relative Clauses, Indirect Questions, Third Conditional (advanced)
+- **Question Types:** Hypothetical situations, past reflections, complex scenarios
+- **Example:** “If you were super talented in a sport, what player would you be? Why would you be that player?”
+- **Sentence Pattern:** “If I were talented in sports, I would be… because…”
+
+-----
+
+## 🗓️ CONTENT STRUCTURE & ORGANIZATION
+
+### Question Bank Size
+
+- **40 weeks** of school year (April - March in Japanese calendar)
+- **5 school days** per week
+- **200 questions per grade** (40 weeks × 5 days)
+- **600 total questions** across all three grades
+
+### Grammar Progression Logic
+
+#### **CRITICAL RULE: Cumulative Grammar Use**
+
+Questions can ONLY use grammar points that students:
+
+1. Have already learned in previous grades
+1. Have learned so far in the current year
+
+**Example for Grade 2, Week 20 (October):**
+
+- ✅ Can use: Be verbs, Can, Simple Present, Present Progressive (Grade 1)
+- ✅ Can use: Past Simple, Future, Real Conditionals, Infinitives (Grade 2, learned by Week 20)
+- ❌ Cannot use: Comparatives (not learned until Week 25)
+- ❌ Cannot use: Second Conditional (Grade 3 grammar)
+
+### Weekly Organization Structure
+
+```
+Small Talk
+├── Grade 1 (Talk About You)
+│   ├── Week 1-4 (April): Be verbs - introductions, descriptions
+│   ├── Week 5-8 (May): Can/Cannot - abilities, permissions
+│   ├── Week 9-12 (June): Simple Present - routines, habits
+│   ├── Week 13-16 (July): Present Progressive - current actions
+│   ├── Week 17-20 (September): Questions (Do you...? / Does he...?)
+│   ├── Week 21-24 (October): Review & mixed grammar
+│   ├── Week 25-28 (November): How many/much, Whose
+│   ├── Week 29-32 (December): Have/Has, possessives
+│   ├── Week 33-36 (January-February): Past Simple introduction
+│   └── Week 37-40 (March): Year review
+│
+├── Grade 2 (What If?)
+│   ├── Week 1-4 (April): Past Simple - spring vacation, memories
+│   ├── Week 5-8 (May): Future (going to/will) - plans, predictions
+│   ├── Week 9-12 (June): Real Conditionals (If...will) - choices
+│   ├── Week 13-16 (July): Infinitives (to + verb) - purposes, feelings
+│   ├── Week 17-20 (September): Gerunds (verb + ing) - hobbies
+│   ├── Week 21-24 (October): Comparatives & Superlatives - preferences
+│   ├── Week 25-28 (November): Indirect Questions - polite inquiry
+│   ├── Week 29-32 (December): Passive Voice - descriptions
+│   ├── Week 33-36 (January-February): Must/Have to - obligations
+│   └── Week 37-40 (March): Year review
+│
+└── Grade 3 (Imagine)
+    ├── Week 1-4 (April): Present Perfect - experiences
+    ├── Week 5-8 (May): Present Perfect Continuous - ongoing activities
+    ├── Week 9-12 (June): Infinitives (for... to...) - purposes
+    ├── Week 13-16 (July): Causative verbs (make/let/help)
+    ├── Week 17-20 (September): Indirect Questions - embedded questions
+    ├── Week 21-24 (October): Relative Clauses (who/which/that) - descriptions
+    ├── Week 25-28 (November): Second Conditional (If I were...) - hypotheticals
+    ├── Week 29-32 (December): Reduced Relative Clauses - advanced descriptions
+    ├── Week 33-36 (January-February): Wish clauses - regrets and desires
+    └── Week 37-40 (March): Third Conditional - past hypotheticals (advanced)
+```
+
+-----
+
+## 🎨 USER INTERFACE REQUIREMENTS
+
+### Main Navigation Flow
+
+```
+Existing App Home
+    ↓
+[New Category Button]: "Small Talk" / "スモールトーク"
+    ↓
+Grade Selection: Grade 1 / Grade 2 / Grade 3
+    ↓
+Week Selection: Week 1-40 (Dropdown or slider)
+    ↓
+Day Selection: Mon / Tue / Wed / Thu / Fri
+    ↓
+Daily Question Display Screen
+```
+
+### Alternative Navigation: Grammar Point Selection
+
+Teachers should also be able to navigate by grammar point for flexibility:
+
+```
+Small Talk → Grade 2 → [Select Grammar Point]
+    ↓
+Dropdown Menu:
+- Past Simple (Weeks 1-4)
+- Future tenses (Weeks 5-8)
+- Real Conditionals (Weeks 9-12)
+- Infinitives (Weeks 13-16)
+... etc.
+    ↓
+Shows all questions for that grammar point
+```
+
+### Daily Question Display Screen
+
+**ESSENTIAL COMPONENTS:**
+
+```
+┌─────────────────────────────────────────────────────┐
+│  SMALL TALK - GRADE 2                               │
+│  Week 15, Day 3 (Wednesday)                         │
+│  Grammar: Real Conditionals (If...will)             │
+├─────────────────────────────────────────────────────┤
+│                                                     │
+│  🎯 TODAY'S QUESTION:                                │
+│                                                     │
+│  [Large, clear text - 36-48pt]                     │
+│  If you have 10,000 yen for one day,               │
+│  what will you buy?                                 │
+│                                                     │
+│  [Japanese translation - smaller, 24pt]            │
+│  もし1日だけ10,000円があったら、何を買う？            │
+│                                                     │
+├─────────────────────────────────────────────────────┤
+│  📝 GRAMMAR PATTERN:                                 │
+│  If I have [something], I will [action]...          │
+│                                                     │
+│  💬 SENTENCE STARTER:                                │
+│  "If I have 10,000 yen, I will..."                  │
+│                                                     │
+│  🔑 KEY VOCABULARY: (optional display)               │
+│  buy 買う / save 貯める / spend 使う                  │
+│                                                     │
+├─────────────────────────────────────────────────────┤
+│  [HIDDEN EXAMPLE - CLICK TO REVEAL]                │
+│                                                     │
+│  When clicked, shows:                               │
+│  "If I have 10,000 yen, I will buy a new video     │
+│  game because I have been wanting one for a long    │
+│  time. I will also save 3,000 yen for the future." │
+│                                                     │
+├─────────────────────────────────────────────────────┤
+│  🤔 FOLLOW-UP QUESTIONS: (expandable section)        │
+│  • Why will you buy that?                          │
+│  • Is 10,000 yen enough?                           │
+│  • Will you save any money?                        │
+│  • What is the most important thing to buy?        │
+│                                                     │
+├─────────────────────────────────────────────────────┤
+│  TIMER & CLASSROOM MANAGEMENT:                      │
+│                                                     │
+│  [Think Time] [2:00] [START] [PAUSE] [RESET]       │
+│  [Pair Talk] [3:00] [START] [PAUSE] [RESET]        │
+│  [Share Time] [5:00] [START] [PAUSE] [RESET]       │
+│                                                     │
+├─────────────────────────────────────────────────────┤
+│  NAVIGATION:                                        │
+│  [← Previous Day] [Next Day →] [Change Week]       │
+│  [Edit Question] [Skip] [Add to Favorites]         │
+│                                                     │
+└─────────────────────────────────────────────────────┘
+```
+
+### Display Modes
+
+1. **Projection Mode** (Default)
+- Large text optimized for classroom projectors/smartboards
+- High contrast colors
+- Minimal UI elements
+- Full screen option
+1. **Teacher Control Mode** (Tablet/Desktop)
+- Smaller display with full controls visible
+- Edit and navigation options
+- Notes section for teacher comments
+- Class progress tracking
+1. **Student Worksheet Mode** (Printable)
+- Print-friendly layout
+- Space for students to write answers
+- Grammar pattern reference at top
+- No answers visible
+
+-----
+
+## 📊 DATA STRUCTURE FOR QUESTIONS
+
+### Question Object Schema
+
+Each question should be stored with the following fields:
+
+```javascript
+{
+  id: "g2-w15-d3",
+  grade: 2,
+  week: 15,
+  day: 3,
+  grammarPoint: "Real Conditionals",
+  grammarPattern: "If I have [something], I will [action]...",
+  textbookReference: {
+    series: "New Horizon 2",
+    unit: 4,
+    pages: [20, 21]
+  },
+  prerequisiteGrammar: [
+    "Past Simple",
+    "Future (will/going to)",
+    "Simple Present"
+  ],
+  
+  question: {
+    en: "If you have 10,000 yen for one day, what will you buy?",
+    jp: "もし1日だけ10,000円があったら、何を買う？"
+  },
+  
+  sentenceStarter: {
+    en: "If I have 10,000 yen, I will...",
+    jp: "もし10,000円があったら、私は..."
+  },
+  
+  exampleAnswer: {
+    en: "If I have 10,000 yen, I will buy a new video game because I have been wanting one for a long time. I will also save 3,000 yen for the future.",
+    jp: "もし10,000円があったら、新しいゲームを買います。なぜなら長い間欲しかったからです。また、3,000円は将来のために貯金します。"
+  },
+  
+  followUpQuestions: [
+    {
+      en: "Why will you buy that?",
+      jp: "なぜそれを買うの？"
+    },
+    {
+      en: "Is 10,000 yen enough?",
+      jp: "10,000円で十分？"
+    },
+    {
+      en: "Will you save any money?",
+      jp: "貯金する？"
+    },
+    {
+      en: "What is the most important thing to buy?",
+      jp: "一番大切な買い物は何？"
+    }
+  ],
+  
+  keyVocabulary: [
+    { en: "buy", jp: "買う" },
+    { en: "save", jp: "貯める" },
+    { en: "spend", jp: "使う" },
+    { en: "expensive", jp: "高い" },
+    { en: "cheap", jp: "安い" }
+  ],
+  
+  questionType: "real-scenario", // or "imaginative", "opinion", "experience", "future-plan"
+  difficulty: "medium",
+  estimatedTime: "8-10 minutes",
+  
+  tags: ["money", "shopping", "decision-making", "daily-life"],
+  
+  teacherNotes: "Students often need prompting to give reasons. Encourage 'because' statements. Some students may need vocabulary support for specific items they want to buy.",
+  
+  culturalNotes: "10,000 yen is a significant amount for JHS students but realistic for a special occasion. Be sensitive to different family financial situations.",
+  
+  variations: [
+    "If you have 1,000 yen...",
+    "If you have 100,000 yen...",
+    "If you win 10,000 yen in a contest..."
+  ]
+}
+```
+
+-----
+
+## 🎮 TEACHER CUSTOMIZATION FEATURES
+
+### Essential Customization Options
+
+1. **Edit Existing Questions**
+- Click “Edit Question” button
+- Modify English or Japanese text
+- Save as custom version (preserves original)
+- Revert to original anytime
+1. **Add Custom Questions**
+- “Add New Question” button
+- Form with all fields (question, grammar point, example, etc.)
+- Assign to specific week/day
+- Automatically integrates into sequence
+1. **Skip Questions**
+- “Skip This Question” button
+- Removed from rotation but not deleted
+- Can be un-skipped later
+- Useful if topic is culturally inappropriate or recently used
+1. **Reorder Questions**
+- Drag-and-drop interface
+- Move questions between days/weeks
+- Useful for adapting to actual class pace
+- “Reset to Default Order” option
+1. **Favorites System**
+- Star/heart icon to favorite questions
+- “My Favorites” collection
+- Quick access to most-used questions
+- Can create themed collections
+1. **Question History**
+- Track which questions have been used
+- Mark as “Used on [date]”
+- Filter to show unused questions
+- Prevent repetition across years
+
+-----
+
+## 📱 TECHNICAL IMPLEMENTATION NOTES
+
+### Integration with Existing App
+
+This feature should integrate seamlessly with your current JHS English Games app:
+
+1. **Navigation Structure:**
+- Add “Small Talk” as a new category on main menu
+- Same visual design language as existing games
+- Consistent navigation patterns
+1. **Data Storage:**
+- Use existing storage system (localStorage or backend)
+- Teacher customizations saved per teacher account
+- Question history tracked locally
+- Option to sync across devices if cloud storage available
+1. **Responsive Design:**
+- Must work on classroom projectors (1920×1080)
+- Must work on tablets (1366×768 and iPad dimensions)
+- Must work on teacher laptops (various sizes)
+- Touch-friendly buttons (minimum 44×44px)
+1. **Performance Requirements:**
+- Fast loading (questions pre-loaded, not fetched individually)
+- Smooth timer animations
+- No lag when revealing example answers
+- Works offline after initial data load
+
+### Content Management System
+
+**For Development Team:**
+
+- Questions should be stored in structured JSON files
+- Easy to bulk update/edit by content creators
+- Versioning system for question updates
+- Export/import functionality for sharing question banks
+
+**Example File Structure:**
+
+```
+/small-talk
+  /grade1
+    /week01-04.json (Be verbs questions)
+    /week05-08.json (Can questions)
+    ...
+  /grade2
+    /week01-04.json (Past Simple questions)
+    ...
+  /grade3
+    /week01-04.json (Present Perfect questions)
+    ...
+```
+
+-----
+
+## 📝 SAMPLE QUESTIONS BY GRADE & WEEK
+
+### Grade 1 Examples
+
+**Week 1 (April) - Be Verbs: Self Introduction**
+
+```
+Monday: What is your name? How do you spell it?
+Pattern: My name is... I spell it...
+
+Tuesday: Where are you from? What city or town?
+Pattern: I am from... It is in...
+
+Wednesday: Who is your best friend? What is their name?
+Pattern: My best friend is... His/Her name is...
+
+Thursday: What is your favorite color? Why is it your favorite?
+Pattern: My favorite color is... because...
+
+Friday: How old are you? When is your birthday?
+Pattern: I am... years old. My birthday is...
+```
+
+**Week 9 (June) - Simple Present: Daily Routines**
+
+```
+Monday: What time do you wake up every day? Is it early or late?
+Pattern: I wake up at... It is...
+
+Tuesday: What do you eat for breakfast? Do you eat Japanese or Western food?
+Pattern: I eat... I eat... food.
+
+Wednesday: How do you go to school? Do you walk, ride a bike, or take a bus?
+Pattern: I go to school by... / I walk to school.
+
+Thursday: What do you do after school? Do you join any clubs?
+Pattern: After school, I... I join... club.
+
+Friday: What time do you go to bed? Do you sleep early?
+Pattern: I go to bed at... I sleep...
+```
+
+### Grade 2 Examples
+
+**Week 5 (May) - Future: Plans and Predictions**
+
+```
+Monday: What are you going to do this weekend? Why?
+Pattern: This weekend, I am going to... because...
+
+Tuesday: What will you eat for lunch today? What do you want to eat?
+Pattern: I will eat... I want to eat... because...
+
+Wednesday: Where will you go during summer vacation? What will you do there?
+Pattern: I will go to... I will...
+
+Thursday: What club will you join next year? Why?
+Pattern: Next year, I will join... because...
+
+Friday: What job do you think you will have in the future? Why?
+Pattern: I think I will be a... because...
+```
+
+**Week 21 (October) - Comparatives: Preferences and Opinions**
+
+```
+Monday: Which is more fun, soccer or baseball? Why do you think so?
+Pattern: I think... is more fun than... because...
+
+Tuesday: Which season is better, summer or winter? What do you like about it?
+Pattern: I think... is better than... because...
+
+Wednesday: Who is more popular in your class, you or your best friend? Why?
+Pattern: I think... is more popular than... because...
+
+Thursday: Which is more important, money or free time? Why?
+Pattern: I think... is more important than... because...
+
+Friday: What is the most delicious food in the world? Why is it the best?
+Pattern: I think... is the most delicious because...
+```
+
+### Grade 3 Examples
+
+**Week 3 (April) - Present Perfect: Life Experiences**
+
+```
+Monday: Have you ever been to another country? Where have you been?
+Pattern: Yes, I have been to... / No, I have never been to...
+
+Tuesday: Have you ever tried a strange food? What was it? Did you like it?
+Pattern: Yes, I have tried... It was... / No, I have never tried...
+
+Wednesday: Have you ever met a famous person? Who was it? When did you meet them?
+Pattern: Yes, I have met... I met him/her... / No, I have never met...
+
+Thursday: What is the most interesting thing you have ever done? Why was it interesting?
+Pattern: The most interesting thing I have done is... It was interesting because...
+
+Friday: How long have you studied English? Do you like studying English?
+Pattern: I have studied English for... years. I...
+```
+
+**Week 27 (November) - Second Conditional: “IMAGINE” Questions**
+
+```
+Monday: If you were super talented in a sport, what player would you be? Why?
+Pattern: If I were talented in sports, I would be... because...
+
+Tuesday: If you could have one superpower, what would it be? How would you use it?
+Pattern: If I could have one superpower, I would have... I would use it to...
+
+Wednesday: If you could live in any country in the world, where would you live? Why?
+Pattern: If I could live anywhere, I would live in... because...
+
+Thursday: If you could meet anyone in history, who would you meet? What would you ask them?
+Pattern: If I could meet anyone, I would meet... I would ask...
+
+Friday: If you were the principal of this school, what would you change? Why?
+Pattern: If I were the principal, I would change... because...
+```
+
+-----
+
+## 🎯 SUCCESS METRICS & TEACHER FEEDBACK
+
+### How Teachers Will Use This Feature
+
+**Typical Classroom Flow (8-10 minutes total):**
+
+1. **Display Question** (30 seconds)
+- Teacher opens Small Talk app
+- Projects question on screen
+- Reads question aloud in English and Japanese
+1. **Think Time** (1-2 minutes)
+- Students think individually
+- Can write notes in notebooks
+- Teacher starts timer on screen
+1. **Pair Talk** (2-3 minutes)
+- Students discuss with partner
+- Practice saying full sentences
+- Teacher monitors and assists
+- Timer visible on screen
+1. **Share Time** (3-5 minutes)
+- 3-5 volunteers share answers with class
+- Teacher uses follow-up questions to extend
+- Teacher corrects major grammar errors gently
+- Example answer revealed if class struggles
+1. **Transition** (30 seconds)
+- Quick recap of grammar pattern
+- Connect to main lesson topic
+- Close Small Talk, begin main class activity
+
+### Expected Outcomes
+
+- **Daily speaking practice** for every student
+- **Grammar recycling** in natural contexts
+- **Student confidence** increases with routine
+- **Teacher preparation time** reduced significantly
+- **Consistent quality** across all classes
+- **Cultural knowledge** building (through varied topics)
+
+### Teacher Feedback Integration
+
+Build in feedback mechanisms:
+
+- “Was this question appropriate?” (Yes/No/Edit)
+- “How did students respond?” (Great/OK/Struggled)
+- “Report an issue” button
+- Star rating system
+- Comment field for improvement suggestions
+
+-----
+
+## 📋 CONTENT CREATION REQUIREMENTS
+
+### Question Writing Guidelines
+
+All questions must meet these criteria:
+
+✅ **Grammatically Accurate**
+
+- Use only grammar students have learned
+- Clear, unambiguous sentence structure
+- Natural, spoken English (not overly formal)
+
+✅ **Age-Appropriate**
+
+- Relevant to 12-15 year old Japanese students
+- Culturally sensitive to Japanese context
+- Avoid controversial topics (politics, religion, etc.)
+- Consider family diversity (single parents, international families, etc.)
+
+✅ **Engaging & Varied**
+
+- Mix of personal, imaginative, and opinion questions
+- Balance serious and fun topics
+- Avoid repetitive question structures
+- Include both individual and universal topics
+
+✅ **Scaffolded for Success**
+
+- Sentence starters provided
+- Example answer demonstrates target length (2-4 sentences)
+- Key vocabulary supplied when needed
+- Follow-up questions help extend weak answers
+
+✅ **Inclusive & Positive**
+
+- No questions that could embarrass students
+- Respect different abilities and backgrounds
+- Allow for multiple “correct” answers
+- Encourage personal expression
+
+### Topics to Include
+
+**Universal Topics (All Grades):**
+
+- Food, sports, animals, colors, seasons
+- Family, friends, school, hobbies
+- Music, movies, anime, games
+- Travel, nature, technology
+
+**Grade-Specific Topics:**
+
+**Grade 1:** Concrete, present-focused
+
+- Daily routines, school life
+- Abilities and talents
+- Simple preferences
+- Immediate plans
+
+**Grade 2:** Past/future, comparisons
+
+- Memories and experiences
+- Future goals and plans
+- Opinions and preferences
+- Problem-solving scenarios
+
+**Grade 3:** Abstract, reflective
+
+- Life experiences and lessons
+- Hypothetical situations
+- Complex opinions
+- Future aspirations
+- Global issues (age-appropriate)
+
+### Topics to Avoid or Handle Carefully
+
+❌ **Completely Avoid:**
+
+- Questions about physical appearance or weight
+- Questions about family income or possessions
+- Questions about romantic relationships
+- Questions about grades or academic ability
+- Questions that could reveal bullying situations
+
+⚠️ **Handle with Care:**
+
+- Family structure (allow for diverse families)
+- Money and shopping (keep amounts reasonable)
+- Cultural practices (respect different traditions)
+- Health and food (consider dietary restrictions)
+- Future careers (don’t pressure about decisions)
+
+-----
+
+## 🚀 DEVELOPMENT PHASES & TIMELINE
+
+### Phase 1: Core System (6-8 weeks)
+
+**Week 1-2: Planning & Data Structure**
+
+- Finalize question database schema
+- Set up content management system
+- Create question template
+
+**Week 3-4: Content Creation**
+
+- Write 200 questions for Grade 2 (priority)
+- Write 200 questions for Grade 3
+- Write 200 questions for Grade 1
+- Review and edit all questions
+
+**Week 5-6: UI Development**
+
+- Build navigation system
+- Create daily question display screen
+- Implement timer functionality
+- Add show/hide example answer feature
+
+**Week 7-8: Teacher Features**
+
+- Build edit question functionality
+- Create add custom question form
+- Implement skip and reorder features
+- Add favorites system
+
+### Phase 2: Enhancement (4-6 weeks)
+
+**Week 9-10: Advanced Features**
+
+- Question history tracking
+- Progress indicators
+- Week/grammar point selector
+- Print-friendly worksheet generator
+
+**Week 11-12: Polish & Testing**
+
+- Teacher beta testing
+- Bug fixes and refinements
+- Performance optimization
+- User feedback integration
+
+### Phase 3: Ongoing (Post-Launch)
+
+- Monthly question additions
+- Seasonal special questions
+- User-submitted questions (curated)
+- Continuous improvement based on teacher feedback
+
+-----
+
+## 📊 DELIVERABLES CHECKLIST
+
+### For Creative/Development Team
+
+**Content:**
+
+- [ ] 600 total questions (200 per grade)
+- [ ] All questions include English and Japanese
+- [ ] Grammar patterns defined for each question
+- [ ] Sentence starters provided
+- [ ] Example answers written (2-4 sentences each)
+- [ ] Follow-up questions (3-4 per main question)
+- [ ] Key vocabulary lists where needed
+- [ ] Teacher notes for cultural/pedagogical context
+
+**UI/UX:**
+
+- [ ] Navigation: Category → Grade → Week/Grammar → Day
+- [ ] Daily question display screen (projection mode)
+- [ ] Timer functionality (think/pair/share)
+- [ ] Show/hide example answer button
+- [ ] Expandable follow-up questions section
+- [ ] Edit question interface
+- [ ] Add custom question form
+- [ ] Skip question functionality
+- [ ] Reorder questions (drag-and-drop)
+- [ ] Favorites/collections system
+- [ ] Previous/Next day navigation
+- [ ] Print worksheet option
+
+**Technical:**
+
+- [ ] Responsive design (projector, tablet, desktop)
+- [ ] Offline capability after initial load
+- [ ] Fast performance (no lag)
+- [ ] Data persistence (localStorage or cloud)
+- [ ] JSON structure for easy content updates
+- [ ] Export/import custom questions
+
+**Documentation:**
+
+- [ ] Teacher user guide
+- [ ] Grammar progression chart
+- [ ] Question bank index
+- [ ] Troubleshooting guide
+- [ ] Video tutorial (optional but recommended)
+
+-----
+
+## 💡 DESIGN INSPIRATION & VISUAL STYLE
+
+### Design Principles
+
+**For Classroom Projection:**
+
+- **Large, clear typography** (minimum 36pt for main question)
+- **High contrast** (dark text on light background or vice versa)
+- **Minimal distractions** (clean, uncluttered layout)
+- **Touch-friendly** buttons (minimum 44×44px tap targets)
+- **Intuitive icons** (universally understood symbols)
+
+### Color Coding System
+
+Consider using consistent colors for each grade:
+
+- **Grade 1:** Blue tones (beginner, calm, foundational)
+- **Grade 2:** Green tones (growing, progressing)
+- **Grade 3:** Purple/violet tones (advanced, sophisticated)
+
+Or use colors for grammar categories:
+
+- **Past tenses:** Orange/amber (looking back)
+- **Present tenses:** Blue/green (current state)
+- **Future tenses:** Purple/violet (forward-looking)
+- **Conditionals:** Pink/magenta (hypothetical/imaginative)
+
+### Typography Recommendations
+
+- **Main Question:** Bold, sans-serif, 40-48pt
+- **Japanese Translation:** Regular, sans-serif, 24-28pt
+- **Grammar Pattern:** Monospace or distinct font, 20-24pt
+- **Body Text:** Sans-serif, 16-20pt
+- **UI Labels:** Sans-serif, 14-16pt
+
+### Sample Layout Mockup Reference
+
+Refer to the existing artifact “Imagine - Daily JHS Warm-up Game” for initial visual direction. The final design should:
+
+- Match the visual style of existing games in the app
+- Feel cohesive with the overall JHS English Games brand
+- Be optimized for classroom use (large, clear, minimal)
+- Include smooth transitions and subtle animations
+- Have immediate visual feedback for all interactions
+
+-----
+
+## 🎓 PEDAGOGICAL NOTES FOR DEVELOPMENT TEAM
+
+### Understanding the Japanese Context
+
+**Why This Feature Matters:**
+
+1. **Class Size:** Japanese JHS classes average 35-40 students, making individual speaking practice challenging. This warm-up ensures every student gets at least 2-3 minutes of speaking time daily.
+1. **Grammar-Translation Method:** Japanese English education historically emphasizes grammar rules and translation. This feature bridges that approach with communicative practice.
+1. **Teacher Preparation Time:** Japanese teachers have heavy workloads. Pre-made questions save 15-30 minutes of daily prep time while maintaining quality.
+1. **Consistency Across Classes:** With 5 classes per grade, same-day questions ensure fair and equal education for all students.
+1. **ALT-JTE Collaboration:** This tool helps both Assistant Language Teachers (ALTs) and Japanese Teachers of English (JTEs) conduct effective warm-ups without extensive planning.
+
+### Key Educational Principles
+
+**Scaffolding:**
+
+- Questions build from simple to complex
+- Grammar cumulates (never leaves behind previous learning)
+- Support materials (sentence starters, examples) fade as students progress
+
+**Student-Centered:**
+
+- Personal questions allow individual expression
+- No single “correct” answer (except grammar accuracy)
+- Students can share as much or as little as comfortable
+
+**Formative Assessment:**
+
+- Teacher hears all students speak weekly
+- Can identify students needing extra support
+- Tracks grammar accuracy informally
+- Not graded, low-pressure practice
+
+**Cultural Responsiveness:**
+
+- Questions appropriate for Japanese cultural context
+- Avoid topics that could cause discomfort
+- Include both universal and Japan-specific content
+- Respect diverse family structures and backgrounds
+
+-----
+
+## ✅ TESTING & QUALITY ASSURANCE
+
+### Testing Requirements
+
+**Content Testing:**
+
+- [ ] All 600 questions reviewed by native English speaker
+- 
