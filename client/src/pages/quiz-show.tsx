@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "wouter";
-import { ArrowLeft, Play, RotateCcw, CheckCircle2, XCircle, Trophy, Loader } from "lucide-react";
+import { ArrowLeft, Play, RotateCcw, CheckCircle2, XCircle, Trophy, Loader, Home } from "lucide-react";
 import confetti from "canvas-confetti";
 
 interface QuizQuestion {
@@ -80,11 +80,11 @@ export default function QuizShow() {
     return (
       <div className="min-h-screen bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center p-4">
         <div className="w-full max-w-md bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-2xl border border-white/20">
-          <Link href="/games">
-            <button className="flex items-center gap-2 text-slate-500 mb-8 hover:text-slate-800 transition-colors">
-              <ArrowLeft size={20} /> Back
-            </button>
-          </Link>
+          <div className="flex items-center gap-4 mb-8">
+            <Link href="/dashboard"><button className="flex items-center gap-2 text-slate-500 hover:text-slate-800 font-bold transition-colors"><Home size={18}/> Dashboard</button></Link>
+            <span className="text-slate-300">·</span>
+            <Link href="/games"><button className="flex items-center gap-2 text-slate-500 hover:text-slate-800 font-bold transition-colors"><ArrowLeft size={18}/> All Games</button></Link>
+          </div>
           <div className="text-center mb-8">
             <div className="inline-block p-4 bg-indigo-100 rounded-2xl mb-4">
               <Play className="text-indigo-600" size={32} />

@@ -1,7 +1,8 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { Link } from "wouter";
 import { ArrowLeft, Home, Trophy, Loader } from "lucide-react";
 import confetti from "canvas-confetti";
+import { grammarSets } from "@/lib/quiz/grammar-sets";
 
 interface Question {
   h1: string;
@@ -9,6 +10,20 @@ interface Question {
   h3: string;
   ans: string;
   query?: string;
+  g1?: string;
+  g2?: string;
+  g3?: string;
+}
+
+const SERPER_KEY = "57bf2beb67e1b19d35b75e0b80b6d393bb5f0aa1";
+
+function makePlaceholderSVG(label: string): string {
+  const encoded = encodeURIComponent(label.toUpperCase());
+  return `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='480' viewBox='0 0 800 480'%3E%3Crect width='800' height='480' fill='%23f1f5f9'/%3E%3Ctext x='400' y='220' font-size='38' text-anchor='middle' fill='%2364748b' font-family='sans-serif'%3E🎨 ${encoded}%3C/text%3E%3Ctext x='400' y='280' font-size='22' text-anchor='middle' fill='%2394a3b8' font-family='sans-serif'%3EImage not found%3C/text%3E%3C/svg%3E`;
+}
+
+function makeLoadingSVG(): string {
+  return `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='480' viewBox='0 0 800 480'%3E%3Crect width='800' height='480' fill='%23f8fafc'/%3E%3Ctext x='400' y='250' font-size='30' text-anchor='middle' fill='%2394a3b8' font-family='sans-serif'%3E⏳ Searching images...%3C/text%3E%3C/svg%3E`;
 }
 
 const quizDataFallback = {
@@ -440,8 +455,59 @@ const quizDataFallback = {
   ],
 };
 
+import { quizDataWeek1 } from "@/lib/quiz/week-1";
+import { quizDataWeek0 } from "@/lib/quiz/week-0";
+import { quizDataWeek2 } from "@/lib/quiz/week-2";
+import { quizDataWeek3 } from "@/lib/quiz/week-3";
+import { quizDataWeek4 } from "@/lib/quiz/week-4";
+import { academicYearWeeks } from "@/lib/quiz/academic-year";
+import { academicYearWeeks2 } from "@/lib/quiz/academic-year-2";
+import { academicYearWeeks3 } from "@/lib/quiz/academic-year-3";
+
+const quizSets = {
+  "NH Grammar": grammarSets,
+  "NH W30": academicYearWeeks3.WEEK_30,
+  "NH W29": academicYearWeeks3.WEEK_29,
+  "NH W28": academicYearWeeks3.WEEK_28,
+  "NH W27": academicYearWeeks3.WEEK_27,
+  "NH W26": academicYearWeeks3.WEEK_26,
+  "NH W25": academicYearWeeks3.WEEK_25,
+  "NH W24": academicYearWeeks3.WEEK_24,
+  "NH W23": academicYearWeeks3.WEEK_23,
+  "NH W22": academicYearWeeks3.WEEK_22,
+  "NH W21": academicYearWeeks3.WEEK_21,
+  "NH W20": academicYearWeeks3.WEEK_20,
+  "NH W19": academicYearWeeks3.WEEK_19,
+  "NH W18": academicYearWeeks3.WEEK_18,
+  "NH W17": academicYearWeeks3.WEEK_17,
+  "NH W16": academicYearWeeks2.WEEK_16,
+  "NH W15": academicYearWeeks2.WEEK_15,
+  "NH W14": academicYearWeeks2.WEEK_14,
+  "NH W13": academicYearWeeks2.WEEK_13,
+  "NH W12": academicYearWeeks2.WEEK_12,
+  "NH W11": academicYearWeeks2.WEEK_11,
+  "NH W10": academicYearWeeks.WEEK_10,
+  "NH W09": academicYearWeeks.WEEK_09,
+  "NH W08": academicYearWeeks.WEEK_08,
+  "NH W07": academicYearWeeks.WEEK_07,
+  "NH W06": academicYearWeeks.WEEK_06,
+  "NH W05": academicYearWeeks.WEEK_05,
+  "NH W04": academicYearWeeks.WEEK_04,
+  "NH W03": academicYearWeeks.WEEK_03,
+  "NH W02": academicYearWeeks.WEEK_02,
+  "NH W01": academicYearWeeks.WEEK_01,
+  "Week 4": quizDataWeek4,
+  "Week 3": quizDataWeek3,
+  "Week 2": quizDataWeek2,
+  "Week 1": quizDataWeek1,
+  "Week 0": quizDataWeek0,
+  "Default": quizDataFallback,
+};
+
 export default function ThreeHintQuiz() {
+  const [showLibrary, setShowLibrary] = useState(true);
   const [grade, setGrade] = useState<string | null>(null);
+  const [selectedSet, setSelectedSet] = useState<string>("Week 1");
   const [questions, setQuestions] = useState<Question[]>([]);
   const [loading, setLoading] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -450,36 +516,56 @@ export default function ThreeHintQuiz() {
   const [showAnswer, setShowAnswer] = useState(false);
   const [teamScores, setTeamScores] = useState({ a: 0, b: 0, c: 0, d: 0 });
 
-  // Scroll refs for smart auto-scrolling
+  const [imgSrc, setImgSrc] = useState<string>("");
+
   const hint1Ref = useRef<HTMLDivElement>(null);
   const hint2Ref = useRef<HTMLDivElement>(null);
   const hint3Ref = useRef<HTMLDivElement>(null);
   const letterContainerRef = useRef<HTMLDivElement>(null);
   const answerBoxRef = useRef<HTMLDivElement>(null);
-  const scoresRef = useRef<HTMLDivElement>(null);
   const questionAreaRef = useRef<HTMLDivElement>(null);
+  const scoresRef = useRef<HTMLDivElement>(null);
+
+  const fetchImage = useCallback(async (query: string) => {
+    setImgSrc(makeLoadingSVG());
+    try {
+      const res = await fetch("https://google.serper.dev/images", {
+        method: "POST",
+        headers: {
+          "X-API-KEY": SERPER_KEY,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ q: query, num: 1, gl: "jp" }),
+      });
+      const data = await res.json();
+      if (data.images && data.images.length > 0) {
+        setImgSrc(data.images[0].imageUrl);
+      } else {
+        setImgSrc(makePlaceholderSVG(query));
+      }
+    } catch {
+      setImgSrc(makePlaceholderSVG(query));
+    }
+  }, []);
 
   useEffect(() => {
     if (grade) {
-      fetchQuiz(grade);
+      setQuestions(quizSets[selectedSet as keyof typeof quizSets][grade as keyof typeof quizDataFallback] || []);
     }
-  }, [grade]);
+  }, [grade, selectedSet]);
+
+  useEffect(() => {
+    if (questions.length > 0 && currentIndex < questions.length) {
+      const q = questions[currentIndex];
+      fetchImage(q.query || q.ans);
+    }
+  }, [currentIndex, questions, fetchImage]);
 
   const fetchQuiz = async (selectedGrade: string) => {
     setLoading(true);
     try {
-      const response = await fetch(
-        `/api/games/three-hint-quiz/${selectedGrade}`,
-      );
-      if (response.ok) {
-        const data = await response.json();
-        setQuestions(data);
-      } else {
-        setQuestions(
-          quizDataFallback[selectedGrade as keyof typeof quizDataFallback] ||
-            [],
-        );
-      }
+      // We now use local sets, but keeping the signature for compatibility if needed
+      setQuestions(quizSets[selectedSet as keyof typeof quizSets][selectedGrade as keyof typeof quizDataFallback] || []);
     } catch (error) {
       console.error("Failed to fetch quiz:", error);
       setQuestions(
@@ -588,6 +674,7 @@ export default function ThreeHintQuiz() {
     setQuestions([]);
     setTeamScores({ a: 0, b: 0, c: 0, d: 0 });
     resetQuestion();
+    setShowLibrary(true);
   };
 
   useEffect(() => {
@@ -624,15 +711,108 @@ export default function ThreeHintQuiz() {
     showAnswer,
   ]);
 
+  // Library Selection Screen
+  if (showLibrary) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800">
+        {/* Sidebar */}
+        <div className="fixed left-0 top-0 h-screen w-20 bg-slate-800 flex flex-col items-center py-6 gap-5 z-50">
+          <Link href="/dashboard">
+            <button className="w-12 h-12 rounded-xl bg-slate-700 hover:bg-slate-600 flex items-center justify-center text-white transition-colors" title="Dashboard">
+              <Home size={24} />
+            </button>
+          </Link>
+          <Link href="/games">
+            <button className="w-12 h-12 rounded-xl bg-slate-700 hover:bg-slate-600 flex items-center justify-center text-white transition-colors" title="All Games">
+              <ArrowLeft size={22} />
+            </button>
+          </Link>
+        </div>
+
+        {/* Main Content */}
+        <div className="ml-20 p-10">
+          {/* Header */}
+          <div className="bg-white dark:bg-slate-800 rounded-3xl shadow-lg p-6 mb-10 flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center text-white">
+                <Trophy size={32} />
+              </div>
+              <div>
+                <h1 className="text-3xl font-black text-slate-800 dark:text-white">
+                  QUIZ <span className="text-blue-600">LIBRARY</span>
+                </h1>
+                <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">
+                  Choose a Weekly Set
+                </p>
+              </div>
+            </div>
+            <div className="px-6 py-2 rounded-full bg-slate-300 dark:bg-slate-600 text-white font-black text-sm uppercase tracking-tight">
+              Select Set
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-10">
+            {Object.keys(quizSets).filter(set => set !== "Default").map((setName) => (
+              <button
+                key={setName}
+                onClick={() => {
+                  setSelectedSet(setName);
+                  setShowLibrary(false);
+                }}
+                className={`group relative h-64 rounded-[2.5rem] p-8 shadow-xl transition-all transform hover:-translate-y-2 hover:shadow-2xl overflow-hidden border-2 ${
+                  setName === "NH Grammar"
+                    ? "bg-gradient-to-br from-emerald-500 to-teal-600 border-transparent text-white"
+                    : "bg-white dark:bg-slate-800 border-transparent hover:border-blue-500"
+                }`}
+              >
+                <div className={`absolute top-0 right-0 w-32 h-32 rounded-bl-full -mr-10 -mt-10 transition-transform group-hover:scale-110 ${setName === "NH Grammar" ? "bg-white/10" : "bg-blue-500/10"}`} />
+                <div className="flex flex-col h-full justify-between">
+                  <div>
+                    <span className={`inline-block px-4 py-1 rounded-full text-xs font-black uppercase tracking-widest mb-4 ${
+                      setName === "NH Grammar"
+                        ? "bg-white/20 text-white"
+                        : "bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400"
+                    }`}>
+                      {setName === "NH Grammar" ? "⭐ Grammar Quiz" : "Weekly Set"}
+                    </span>
+                    <h3 className={`text-4xl font-black leading-tight ${setName === "NH Grammar" ? "text-white" : "text-slate-800 dark:text-white"}`}>
+                      {setName}
+                    </h3>
+                    {setName === "NH Grammar" && (
+                      <p className="text-sm text-white/80 font-semibold mt-2">
+                        Be verbs · Past · Relative · Passive
+                      </p>
+                    )}
+                  </div>
+                  <div className={`flex items-center gap-2 font-bold text-sm ${setName === "NH Grammar" ? "text-white/70" : "text-slate-400"}`}>
+                    <span>Click to start quiz</span>
+                    <div className={`w-8 h-8 rounded-full text-white flex items-center justify-center transform transition-transform group-hover:translate-x-1 ${setName === "NH Grammar" ? "bg-white/20" : "bg-blue-600"}`}>
+                      →
+                    </div>
+                  </div>
+                </div>
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   // Grade Selection Screen
   if (!grade || questions.length === 0) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800">
         {/* Sidebar */}
         <div className="fixed left-0 top-0 h-screen w-20 bg-slate-800 flex flex-col items-center py-6 gap-5 z-50">
-          <Link href="/games">
-            <button className="w-12 h-12 rounded-xl bg-slate-700 hover:bg-slate-600 flex items-center justify-center text-white transition-colors">
+          <Link href="/dashboard">
+            <button className="w-12 h-12 rounded-xl bg-slate-700 hover:bg-slate-600 flex items-center justify-center text-white transition-colors" title="Dashboard">
               <Home size={24} />
+            </button>
+          </Link>
+          <Link href="/games">
+            <button className="w-12 h-12 rounded-xl bg-slate-700 hover:bg-slate-600 flex items-center justify-center text-white transition-colors" title="All Games">
+              <ArrowLeft size={22} />
             </button>
           </Link>
         </div>
@@ -791,53 +971,65 @@ export default function ThreeHintQuiz() {
             {
               num: 1,
               hint: currentQuestion.h1,
-              color: "border-blue-500",
+              grammarTag: currentQuestion.g1,
+              color: "border-sky-500",
+              tagBg: "bg-sky-100 text-sky-700",
+              numBg: "bg-sky-100 text-sky-600",
               ref: hint1Ref,
             },
             {
               num: 2,
               hint: currentQuestion.h2,
-              color: "border-orange-500",
+              grammarTag: currentQuestion.g2,
+              color: "border-amber-500",
+              tagBg: "bg-amber-100 text-amber-700",
+              numBg: "bg-amber-100 text-amber-600",
               ref: hint2Ref,
             },
             {
               num: 3,
               hint: currentQuestion.h3,
-              color: "border-pink-500",
+              grammarTag: currentQuestion.g3,
+              color: "border-rose-500",
+              tagBg: "bg-rose-100 text-rose-700",
+              numBg: "bg-rose-100 text-rose-600",
               ref: hint3Ref,
             },
-          ].map(({ num, hint, color, ref }, index) => (
+          ].map(({ num, hint, grammarTag, color, tagBg, numBg, ref }, index) => (
             <div
               key={num}
               ref={ref}
               className={`bg-white dark:bg-slate-800 rounded-[1.875rem] p-8 shadow-md transition-all duration-500 ${
                 revealedHints.has(index)
-                  ? `border-l-[12px] ${color} opacity-100 animate-fade-in-right`
+                  ? `border-l-[20px] ${color} opacity-100 animate-fade-in-right`
                   : "border-l-[12px] border-slate-200 dark:border-slate-700 opacity-40"
               }`}
             >
-              <div className="flex items-start gap-8">
-                <span
-                  className={`text-6xl font-black ${
-                    num === 1
-                      ? "text-blue-100 dark:text-blue-900"
-                      : num === 2
-                        ? "text-orange-100 dark:text-orange-900"
-                        : "text-pink-100 dark:text-pink-900"
+              <div className="flex items-start gap-6">
+                <div
+                  className={`w-16 h-16 rounded-2xl flex items-center justify-center text-4xl font-black flex-shrink-0 ${
+                    revealedHints.has(index) ? numBg : "bg-slate-100 text-slate-300"
                   }`}
                 >
-                  0{num}
-                </span>
-                {revealedHints.has(index) ? (
-                  <p
-                    className="text-3xl font-bold text-slate-700 dark:text-slate-200 pt-2"
-                    dangerouslySetInnerHTML={{ __html: hint }}
-                  />
-                ) : (
-                  <p className="text-3xl font-bold text-slate-400 dark:text-slate-500 pt-2">
-                    Click button below to reveal hint {num}
-                  </p>
-                )}
+                  {num}
+                </div>
+                <div className="flex-1 min-w-0">
+                  {revealedHints.has(index) && grammarTag && (
+                    <span className={`inline-block text-xs font-bold tracking-wide px-3 py-1 rounded-full mb-2 ${tagBg}`}>
+                      {grammarTag}
+                    </span>
+                  )}
+                  {revealedHints.has(index) ? (
+                    <p
+                      className="text-3xl font-bold text-slate-700 dark:text-slate-200 leading-snug"
+                      dangerouslySetInnerHTML={{ __html: hint }}
+                    />
+                  ) : (
+                    <p className="text-3xl font-bold text-slate-400 dark:text-slate-500 pt-2">
+                      Click button below to reveal hint {num}
+                    </p>
+                  )}
+                </div>
               </div>
             </div>
           ))}
@@ -874,14 +1066,16 @@ export default function ThreeHintQuiz() {
                   {currentQuestion.ans}
                 </h2>
               </div>
-              <img
-                src={`https://loremflickr.com/800/600/${encodeURIComponent(currentQuestion.query || currentQuestion.ans.toLowerCase())}?lock=${currentIndex}`}
-                alt={currentQuestion.ans}
-                className="w-full h-[400px] object-cover rounded-b-[2.25rem]"
-                onError={(e) => {
-                  e.currentTarget.src = `https://via.placeholder.com/800x600/3b82f6/ffffff?text=${encodeURIComponent(currentQuestion.ans)}`;
-                }}
-              />
+              <div className="w-full h-[420px] bg-slate-50 flex items-center justify-center overflow-hidden border-[10px] border-white rounded-b-[2.25rem]">
+                <img
+                  src={imgSrc}
+                  alt={currentQuestion.ans}
+                  className="max-w-full max-h-full object-contain transition-opacity duration-300"
+                  onError={(e) => {
+                    e.currentTarget.src = makePlaceholderSVG(currentQuestion.query || currentQuestion.ans);
+                  }}
+                />
+              </div>
             </div>
           </div>
         )}
@@ -1044,6 +1238,13 @@ export default function ThreeHintQuiz() {
           padding: 2px 8px;
           border-radius: 8px;
           box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .gu {
+          border-bottom: 5px solid #fbbf24;
+          padding-bottom: 2px;
+          color: #1e293b;
+          font-weight: 900;
         }
       `}</style>
     </div>

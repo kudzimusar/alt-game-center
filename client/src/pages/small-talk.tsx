@@ -3,6 +3,7 @@ import { Link } from "wouter";
 import {
   ArrowLeft,
   Clock,
+  Home,
   RotateCcw,
   ChevronLeft,
   ChevronRight,
@@ -5415,11 +5416,11 @@ export default function SmallTalk() {
     return (
       <div className="min-h-screen bg-gradient-to-br from-indigo-600 to-violet-700 flex items-center justify-center p-4">
         <div className="w-full max-w-md bg-white rounded-[2.5rem] p-10 shadow-2xl">
-          <Link href="/games">
-            <button className="flex items-center gap-2 text-slate-400 hover:text-slate-600 transition-colors mb-10 font-bold">
-              <ArrowLeft size={20} /> Back to Games
-            </button>
-          </Link>
+          <div className="flex items-center gap-4 mb-10">
+            <Link href="/dashboard"><button className="flex items-center gap-2 text-slate-400 hover:text-slate-600 transition-colors font-bold"><Home size={18}/> Dashboard</button></Link>
+            <span className="text-slate-300">·</span>
+            <Link href="/games"><button className="flex items-center gap-2 text-slate-400 hover:text-slate-600 transition-colors font-bold"><ArrowLeft size={18}/> All Games</button></Link>
+          </div>
           <h1 className="text-5xl font-display font-black text-center mb-10 text-slate-900 uppercase italic tracking-tight">
             Small Talk
           </h1>

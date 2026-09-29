@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "wouter";
-import { ArrowLeft, Trophy, Loader, CheckCircle2, XCircle } from "lucide-react";
+import { ArrowLeft, Trophy, Loader, CheckCircle2, XCircle, Home } from "lucide-react";
 import confetti from "canvas-confetti";
 
 interface Question {
@@ -147,9 +147,11 @@ export default function Jeopardy() {
     return (
       <div className="min-h-screen bg-gradient-to-br from-red-50 to-blue-50 dark:from-slate-900 dark:to-slate-800 flex items-center justify-center p-4">
         <div className="w-full max-w-md">
-          <Link href="/games">
-            <button className="flex items-center gap-2 text-slate-600 mb-8" data-testid="button-back"><ArrowLeft size={20}/> Back</button>
-          </Link>
+          <div className="flex items-center gap-4 mb-8">
+            <Link href="/dashboard"><button className="flex items-center gap-2 text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white font-bold transition-colors"><Home size={18}/> Dashboard</button></Link>
+            <span className="text-slate-300 dark:text-slate-600">·</span>
+            <Link href="/games"><button className="flex items-center gap-2 text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white font-bold transition-colors"><ArrowLeft size={18}/> All Games</button></Link>
+          </div>
           <div className="bg-white dark:bg-slate-800 rounded-3xl p-8 shadow-xl border border-slate-200 dark:border-slate-700">
             <h1 className="text-4xl font-display font-black text-center mb-6">Jeopardy Battle</h1>
             
