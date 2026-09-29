@@ -1,9 +1,10 @@
-name: Restore UI CI
+name: ALT Game Center CI
 
 on:
   push:
     branches:
-      - fix/restore-vercel-ui
+      - main
+      - migration/full-replit-code-2026
   pull_request:
     branches:
       - main
@@ -30,12 +31,18 @@ jobs:
           set -euo pipefail
           test -f dist/public/index.html
           test -d dist/public/assets
-          test -n "$(find dist/public/assets -type f -maxdepth 1 -print -quit)"
+          test -n "$(find dist/public/assets -maxdepth 1 -type f -print -quit)"
       - name: Guard against exposed Google API keys
         shell: bash
         run: |
           set -euo pipefail
-          if grep -R -n -E 'AIza[0-9A-Za-z_-]{20,}'             --exclude-dir=.git --exclude-dir=node_modules --exclude='package-lock.json' .; then
+          if grep -R -n -E 'AIza[0-9A-Za-z_-]{20,}'             --exclude-dir=.git             --exclude-dir=node_modules             --exclude='package-lock.json' .; then
             echo "A Google API key pattern is present in the repository."
             exit 1
           fi
+      - name: Guard against Replit deployment metadata
+        shell: bash
+        run: |
+          set -euo pipefail
+          test ! -f .replit
+          test ! -f vite-plugin-meta-images.ts
