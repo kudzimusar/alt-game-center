@@ -99,6 +99,11 @@ export default function GameList() {
                         <div>
                           <div className="flex items-center gap-2 mb-1">
                             <h3 className="text-xl font-display font-bold">{game.title}</h3>
+                            {(game as any).category && (
+                              <span className="text-[10px] font-black px-2 py-0.5 bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 rounded-full uppercase tracking-wide">
+                                {(game as any).category}
+                              </span>
+                            )}
                             {(game as any).isNew && (
                               <span className="text-xs font-black px-2 py-0.5 bg-yellow-400 text-slate-900 rounded-full">NEW</span>
                             )}
