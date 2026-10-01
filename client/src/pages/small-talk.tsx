@@ -14,7 +14,7 @@ import { motion, AnimatePresence } from "framer-motion";
 // RULE: NEVER USE PLACEHOLDERS OR TRUNCATED DATA STRUCTURES IN THIS FILE.
 // ALL 400 QUESTIONS MUST BE REPRESENTED FULLY TO PREVENT DATA LOSS.
 // If data needs to be added, APPEND it to the existing structure.
-const hardcodedQuestions: Record<string, any[]> = {
+export const hardcodedQuestions: Record<string, any[]> = {
   "1": [
     // WEEKS 1-12
     {
