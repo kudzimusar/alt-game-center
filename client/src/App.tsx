@@ -12,6 +12,7 @@ import WordHunt from "@/pages/word-hunt";
 import Jeopardy from "@/pages/jeopardy";
 import QuizShow from "@/pages/quiz-show";
 import SmallTalk from "@/pages/small-talk";
+import SmallTalkPremium from "@/pages/small-talk-premium";
 import ClassQuiz from "@/pages/class-quiz";
 import InterviewBingo from "@/pages/interview-bingo";
 import InterviewBingoHost from "@/pages/interview-bingo-host";
@@ -98,6 +99,7 @@ function Router() {
       <Route path="/game/jeopardy" component={Jeopardy} />
       <Route path="/game/quiz-show" component={QuizShow} />
       <Route path="/game/small-talk" component={SmallTalk} />
+      <Route path="/game/small-talk-premium" component={SmallTalkPremium} />
       <Route path="/game/class-quiz" component={ClassQuiz} />
       <Route path="/game/interview-bingo" component={InterviewBingo} />
       <Route path="/game/interview-bingo/host" component={InterviewBingoHost} />
