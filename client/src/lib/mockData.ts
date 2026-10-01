@@ -40,6 +40,18 @@ export const games = [
     grades: ["1", "2", "3"],
     skills: ["speaking", "listening"],
     color: "text-pink-500",
+    category: "Small Talk",
+  },
+  {
+    id: "small-talk-premium",
+    title: "Small Talk Premium",
+    description: "Teacher edition with grammar search, class memory, progress tracking, notes, and backups.",
+    grades: ["1", "2", "3"],
+    skills: ["speaking", "listening"],
+    color: "text-violet-500",
+    category: "Small Talk",
+    isNew: true,
+    route: "/game/small-talk-premium",
   },
   {
     id: "class-quiz",
